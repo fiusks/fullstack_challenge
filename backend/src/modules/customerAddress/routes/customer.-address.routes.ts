@@ -10,14 +10,14 @@ import {
 import { createCustomerAddressSchema } from './schemas';
 
 export default async function customerRoutes(fastify: FastifyInstance) {
-  const customerAddressBasePath = './customer-address';
+  const customerAddressBasePath = 'customer-address';
 
   fastify.register(
     (customerAddressRoutes, opts, done) => {
       customerAddressRoutes.get('/:customerId', async (request, reply) => {
-        const address = findCustomerAddressServiceFactory(fastify).execute(
-          request.params['customerId'],
-        );
+        const address = await findCustomerAddressServiceFactory(
+          fastify,
+        ).execute(request.params['customerId']);
 
         reply.send(address).status(200);
       });
@@ -25,30 +25,30 @@ export default async function customerRoutes(fastify: FastifyInstance) {
       customerAddressRoutes.post<{ Body: CreateCustomerAddressDto }>('/', {
         schema: { body: createCustomerAddressSchema },
         handler: async (request, reply) => {
-          const find = createCustomerAddressServiceFactory(fastify);
+          const newAddress = await createCustomerAddressServiceFactory(
+            fastify,
+          ).execute(request.body);
 
-          const result = await find.execute(request.body['id']);
-
-          reply.send(result).status(200);
+          reply.send(newAddress).status(200);
         },
       });
 
       customerAddressRoutes.delete('/:id', async (request, reply) => {
-        const find = deleteCustomerAddressServiceFactory(fastify);
+        await deleteCustomerAddressServiceFactory(fastify).execute(
+          request.params['id'],
+        );
 
-        const result = await find.execute(request.params['id']);
-
-        reply.send(result).status(200);
+        reply.send().status(200);
       });
 
       customerAddressRoutes.put<{ Body: CreateCustomerAddressDto }>('/', {
         schema: { body: createCustomerAddressSchema },
         handler: async (request, reply) => {
-          const find = updateCustomerAddressServiceFactory(fastify);
+          const updatedAddress = updateCustomerAddressServiceFactory(
+            fastify,
+          ).execute(request.body['id']);
 
-          const result = await find.execute(request.body['id']);
-
-          reply.send(result).status(200);
+          reply.send(updatedAddress).status(200);
         },
       });
 
