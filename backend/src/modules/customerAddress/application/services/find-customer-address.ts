@@ -1,6 +1,5 @@
 import { notFoundError } from '../../../common/domain';
-import { CustomerAddress } from '../entities';
-import { CustomerAddressRepository } from '../repositories';
+import { CustomerAddress, CustomerAddressRepository } from '../../domain';
 
 export class FindCustomerAddress {
   constructor(

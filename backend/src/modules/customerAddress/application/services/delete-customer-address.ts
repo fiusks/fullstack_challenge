@@ -1,4 +1,4 @@
-import { CustomerAddressRepository } from '../repositories';
+import { CustomerAddressRepository } from '../../domain';
 
 export class DeleteCustomerAddress {
   constructor(

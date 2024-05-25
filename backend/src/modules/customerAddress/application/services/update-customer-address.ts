@@ -1,7 +1,6 @@
 import { notFoundError } from '../../../common/domain';
+import { CustomerAddress, CustomerAddressRepository } from '../../domain';
 import { CreateCustomerAddressDto } from '../dtos';
-import { CustomerAddress } from '../entities';
-import { CustomerAddressRepository } from '../repositories';
 
 export class UpdateCustomerAddress {
   constructor(
