@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
-import { PrismaCustomerRepository } from 'src/modules/customer/infra';
-import { PrismaCustomerAddressRepository } from 'src/modules/customerAddress/infra';
+import { PrismaCustomerRepository } from '../../../../customer';
+import { PrismaCustomerAddressRepository } from '../../../infra';
 
 export const customerAddressRepositoryFactory = (fastify: FastifyInstance) => {
   return new PrismaCustomerAddressRepository(fastify.prisma);

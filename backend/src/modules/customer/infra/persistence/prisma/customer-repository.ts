@@ -1,4 +1,4 @@
-import { Customer, CustomerRepository } from 'src/modules/customer/domain';
+import { Customer, CustomerRepository } from '../../../domain';
 import { PrismaCustomer } from './customer-model';
 import { PrismaClient } from '@prisma/client';
 
