@@ -12,7 +12,7 @@ export class CreateCustomerAddress {
   async execute(input: CreateCustomerAddressDto): Promise<CustomerAddress> {
     const dbCustomer = await this.customerRepository.findById(input.customerId);
 
-    if (dbCustomer) {
+    if (!dbCustomer) {
       throw notFoundError('Usuário não encontrado');
     }
 
