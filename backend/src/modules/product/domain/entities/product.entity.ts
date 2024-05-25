@@ -11,12 +11,12 @@ export class Product extends BaseEntity {
       price: z.number(),
       stockQuantity: z.number(),
       image: z.string(),
-      category: Category.validator,
+      category: Category.validator.transform((props) => new Category(props)),
     });
   }
 
   public static create(props: Product.CreateProps): Product {
-    return new Product(this.validator.parse(props));
+    return new Product(Product.validator.parse(props));
   }
 
   public update(props: Product.CreateProps): void {
