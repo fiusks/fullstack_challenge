@@ -28,10 +28,10 @@ model Customer {
     cpf       String    @unique @db.VarChar(11)
     phone     String?   @db.VarChar(11)
     birthdate DateTime? @db.Date
-    addresses Address[]
     orders    Order[]
     createdAt DateTime  @default(now())
     updatedAt DateTime  @updatedAt
+    address   Address?
 }
 
 model Address {
@@ -43,8 +43,8 @@ model Address {
     number       String   @db.VarChar(10)
     complement   String?  @db.VarChar(100)
     state        String   @db.VarChar(2)
-    customerId   String
     customer     Customer @relation(fields: [customerId], references: [id])
+    customerId   String   @unique
     createdAt    DateTime @default(now())
     updatedAt    DateTime @updatedAt
 }
