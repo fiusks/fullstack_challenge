@@ -27,28 +27,14 @@ export class CustomerAddress extends BaseEntity {
     });
   }
 
-  public updateProfile(props: Partial<CustomerAddress.CreateProps>): void {
-    if (props.city) {
-      this.#city = props.city;
-    }
-    if (props.street) {
-      this.#street = props.street;
-    }
-    if (props.neighborhood) {
-      this.#neighborhood = props.neighborhood;
-    }
-    if (props.number) {
-      this.#number = props.number;
-    }
-    if (props.complement) {
-      this.#complement = props.complement;
-    }
-    if (props.zipCode) {
-      this.#zipCode = props.zipCode;
-    }
-    if (props.state) {
-      this.#state = props.state;
-    }
+  public update(props: CustomerAddress.CreateProps): void {
+    this.#city = props.city;
+    this.#street = props.street;
+    this.#neighborhood = props.neighborhood;
+    this.#number = props.number;
+    this.#complement = props.complement;
+    this.#zipCode = props.zipCode;
+    this.#state = props.state;
   }
 
   public toJSON(): CustomerAddress.JSON {
