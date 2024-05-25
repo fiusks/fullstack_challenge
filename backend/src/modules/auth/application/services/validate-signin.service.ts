@@ -27,6 +27,6 @@ export class ValidateSigninService {
 
     const dto = new UserDto(user.id.id, user.email.value, user.username.value);
     const accessToken = this.accessTokenProvider.generateToken(dto);
-    return new SessionDto(accessToken);
+    return new SessionDto(dto, accessToken);
   }
 }
