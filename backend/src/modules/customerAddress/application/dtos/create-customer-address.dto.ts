@@ -7,7 +7,7 @@ export class CreateCustomerAddressDto {
   public readonly neighborhood: string;
   public readonly city: string;
   public readonly number: string;
-  public readonly complement: string;
+  public readonly complement: string | null;
   public readonly state: string;
 
   constructor(address: CustomerAddress, customerId: string) {
