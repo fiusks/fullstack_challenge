@@ -1,6 +1,7 @@
 import { Customer } from '../../domain';
 
 export class UpdateCustomerDto {
+  public readonly id: string;
   public readonly email: string;
   public readonly username: string;
   public readonly name: string;
@@ -10,6 +11,7 @@ export class UpdateCustomerDto {
   public readonly phone: string | null;
 
   constructor(customer: Customer.JSON) {
+    this.id = customer.id;
     this.email = customer.email;
     this.username = customer.username;
     this.name = customer.name;
