@@ -7,9 +7,9 @@ export class User extends BaseEntity {
     return BaseEntity.baseValidator.extend({
       name: z.string().max(200),
       email: Email.validator.transform(Email.create),
-      username: z.string().transform(Username.create),
+      username: Username.validator.transform(Username.create),
       hashedPassword: z.string(),
-      cpf: z.string().transform(CPF.create),
+      cpf: CPF.refinedValidator.transform(CPF.create),
       createdAt: z.date().optional().default(new Date()),
       updatedAt: z.date().optional().default(new Date()),
     });
@@ -61,6 +61,7 @@ export class User extends BaseEntity {
     super(props.id, props.createdAt, props.updatedAt);
     this.#name = props.name;
     this.#username = props.username;
+    this.#cpf = props.cpf;
     this.#email = props.email;
     this.#hashedPassword = props.hashedPassword;
   }
