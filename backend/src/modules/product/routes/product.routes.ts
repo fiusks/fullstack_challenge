@@ -6,7 +6,11 @@ import {
   listProductServiceFactory,
   updateProductServiceFactory,
 } from '../application/factories';
-import { createProductSchema, updateProductSchema } from './schemas/product';
+import {
+  createProductSchema,
+  deleteProductSchema,
+  updateProductSchema,
+} from './schemas/product';
 import { ProductInputDto } from '../application/dtos';
 
 export default async function productRoutes(fastify: FastifyInstance) {
@@ -31,12 +35,14 @@ export default async function productRoutes(fastify: FastifyInstance) {
         },
       });
 
-      customerAddressRoutes.delete('/:id', async (request, reply) => {
-        await deleteProductServiceFactory(fastify).execute(
-          request.params['id'],
-        );
+      customerAddressRoutes.delete<{ Params: { id: string } }>('/:id', {
+        schema: { params: deleteProductSchema },
+        handler: async (request, reply) => {
+          const { id } = request.params;
+          await deleteProductServiceFactory(fastify).execute(id);
 
-        reply.send().status(200);
+          reply.send().status(200);
+        },
       });
 
       customerAddressRoutes.put<{ Body: ProductInputDto }>('/', {
