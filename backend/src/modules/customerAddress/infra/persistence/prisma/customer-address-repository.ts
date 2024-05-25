@@ -44,12 +44,16 @@ export class PrismaCustomerAddressRepository
     return;
   }
 
-  public async findAllByCustomerId(id: string): Promise<CustomerAddress[]> {
-    const customerAddresses = await this.prismaService.address.findMany({
-      where: { id },
+  public async findByCustomerId(id: string): Promise<CustomerAddress | null> {
+    const customerAddresses = await this.prismaService.address.findFirst({
+      where: { customerId: id },
     });
 
-    return customerAddresses.map((address) => this.convert(address));
+    if (!customerAddresses) {
+      return null;
+    }
+
+    return this.convert(customerAddresses);
   }
 
   public async update(
