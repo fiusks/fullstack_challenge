@@ -35,8 +35,9 @@ describe('CustomerAddress', () => {
 
   describe('updateProfile', () => {
     it('should update address properties with provided values', () => {
+      const customerId = uuidv4();
       const initialProps = {
-        customerId: uuidv4(),
+        customerId,
         zipCode: '12345',
         street: 'Main St',
         neighborhood: 'Downtown',
@@ -49,12 +50,17 @@ describe('CustomerAddress', () => {
       const address = CustomerAddress.create(initialProps);
 
       const updatedProps = {
+        customerId,
+        zipCode: '12345',
         city: 'New City',
         street: 'Updated St',
+        neighborhood: 'Downtown',
         number: '456',
+        complement: 'Apt 101',
+        state: 'NY',
       };
 
-      address.updateProfile(updatedProps);
+      address.update(updatedProps);
 
       expect(address.city).toEqual(updatedProps.city);
       expect(address.street).toEqual(updatedProps.street);
