@@ -5,7 +5,7 @@ export class CPF {
     return z
       .string()
       .min(11)
-      .max(14)
+      .max(11)
       .transform((cpf) => cpf.replace(/[^\d]+/g, ''));
   }
 
@@ -48,8 +48,7 @@ export class CPF {
   }
 
   public static create(props: CPF.CreateProps): CPF {
-    this.refinedValidator.parse(props);
-    return new CPF({ cpf: props });
+    return new CPF({ cpf: this.refinedValidator.parse(props) });
   }
 
   public toJSON(): CPF.JSON {
