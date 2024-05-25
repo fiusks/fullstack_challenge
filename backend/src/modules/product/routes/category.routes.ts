@@ -11,6 +11,7 @@ import {
   UpdateCategoryInputDto,
 } from '../application/dtos';
 import { createCategorySchema, updateCategorySchema } from './schemas/category';
+import { deleteCategorySchema } from './schemas/category/delete-category.schema';
 
 export default async function categoryRoutes(fastify: FastifyInstance) {
   const categoriesBasePath = 'categories';
@@ -34,12 +35,20 @@ export default async function categoryRoutes(fastify: FastifyInstance) {
         },
       });
 
-      categoriesRoutes.delete('/:id', async (request, reply) => {
-        await deleteCategoryServiceFactory(fastify).execute(
-          request.params['id'],
-        );
+      categoriesRoutes.delete<{
+        Params: { id: string };
+      }>('/:id', {
+        schema: {
+          params: deleteCategorySchema,
+        },
 
-        reply.send().status(200);
+        handler: async (request, reply) => {
+          const { id } = request.params;
+
+          await deleteCategoryServiceFactory(fastify).execute(id);
+
+          reply.send().status(200);
+        },
       });
 
       categoriesRoutes.put<{ Body: UpdateCategoryInputDto }>('/', {
