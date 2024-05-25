@@ -1,1 +1,1 @@
-export * from './find-customer-address-service.factory';
+export * from './customer-address-service.factories';
