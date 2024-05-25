@@ -5,6 +5,7 @@ import { Username } from '../value-objects';
 export class User extends BaseEntity {
   public static get validator() {
     return BaseEntity.baseValidator.extend({
+      name: z.string().max(200),
       email: Email.validator.transform(Email.create),
       username: z.string().transform(Username.create),
       hashedPassword: z.string(),
@@ -16,6 +17,10 @@ export class User extends BaseEntity {
 
   public static create(props: User.CreateProps): User {
     return new User(User.validator.parse(props));
+  }
+
+  public get name(): string {
+    return this.#name;
   }
 
   public get email(): Email {
@@ -37,6 +42,7 @@ export class User extends BaseEntity {
   public toJSON(): User.JSON {
     return {
       id: this.id.toJSON(),
+      name: this.#name,
       email: this.#email.toJSON(),
       username: this.#username.toJSON(),
       cpf: this.#cpf.toJSON(),
@@ -47,11 +53,13 @@ export class User extends BaseEntity {
 
   #username: Username;
   #hashedPassword: string;
+  #name: string;
   #email: Email;
   #cpf: CPF;
 
   constructor(props: User.Props) {
     super(props.id, props.createdAt, props.updatedAt);
+    this.#name = props.name;
     this.#username = props.username;
     this.#email = props.email;
     this.#hashedPassword = props.hashedPassword;
@@ -61,6 +69,7 @@ export class User extends BaseEntity {
 export namespace User {
   export type CreateProps = {
     id?: string;
+    name: string;
     email: string;
     username: string;
     hashedPassword: string;
@@ -73,6 +82,7 @@ export namespace User {
     id: EntityId;
     email: Email;
     username: Username;
+    name: string;
     hashedPassword: string;
     cpf: CPF;
     createdAt: Date;
@@ -81,6 +91,7 @@ export namespace User {
 
   export type JSON = {
     id: EntityId.JSON;
+    name: string;
     email: Email.JSON;
     username: string;
     cpf: CPF.JSON;
