@@ -1,6 +1,6 @@
 import fastify from 'fastify';
 import customerRoutes from './modules/customerAddress/routes/customer.-address.routes';
-import prismaPlugin from './modules/common/infra/http/fastify';
+import prismaPlugin from './modules/common/infra/http/fastify/plugins/prisma';
 
 const app = fastify();
 
