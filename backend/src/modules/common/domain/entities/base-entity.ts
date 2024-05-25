@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { EntityId } from '../value-objects';
 
 export abstract class BaseEntity {
-  public static get validator() {
+  public static get baseValidator() {
     return z.object({
       id: EntityId.validator
         .transform((id) => EntityId.create(id))

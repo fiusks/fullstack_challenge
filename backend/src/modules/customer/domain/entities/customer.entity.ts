@@ -7,7 +7,7 @@ import { CustomerAddress } from '../../../customerAddress/domain';
 
 export class Customer extends BaseEntity {
   public static get validator() {
-    return BaseEntity.validator.extend({
+    return BaseEntity.baseValidator.extend({
       email: Email.validator.transform((email) => Email.create(email)),
       username: z.string(),
       password: Password.validator.transform((password) =>

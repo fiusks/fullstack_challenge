@@ -4,7 +4,7 @@ import { Category } from './category.entity';
 
 export class Product extends BaseEntity {
   public static get validator() {
-    return BaseEntity.validator.extend({
+    return BaseEntity.baseValidator.extend({
       name: z.string(),
       description: z.string(),
       enabled: z.boolean().default(true),
@@ -16,16 +16,7 @@ export class Product extends BaseEntity {
   }
 
   public static create(props: Product.CreateProps): Product {
-    this.validator.parse(props);
-
-    return new Product({
-      ...props,
-      id: EntityId.create(props.id),
-      category: Category.create(props.category),
-      enabled: props.enabled ?? true,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
+    return new Product(this.validator.parse(props));
   }
 
   public update(props: Product.CreateProps): void {

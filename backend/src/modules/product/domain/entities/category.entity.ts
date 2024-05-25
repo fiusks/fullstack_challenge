@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 export class Category extends BaseEntity {
   public static get validator() {
-    return BaseEntity.validator.extend({
+    return BaseEntity.baseValidator.extend({
       name: z.string().max(20),
       description: z.string().max(200),
       enabled: z.boolean().default(true),
@@ -11,15 +11,7 @@ export class Category extends BaseEntity {
   }
 
   public static create(props: Category.CreateProps): Category {
-    this.validator.parse(props);
-
-    return new Category({
-      ...props,
-      id: new EntityId({ id: props.id }),
-      enabled: props.enabled ?? true,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
+    return new Category(this.validator.parse(props));
   }
 
   public get name(): string {
@@ -34,7 +26,7 @@ export class Category extends BaseEntity {
     return this.#description;
   }
 
-  public update(props: Partial<Category.CreateProps>): void {
+  public update(props: Category.CreateProps): void {
     this.#name = props.name;
     this.#description = props.description;
   }

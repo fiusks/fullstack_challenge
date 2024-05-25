@@ -3,8 +3,8 @@ import { z } from 'zod';
 
 export class CustomerAddress extends BaseEntity {
   public static get validator() {
-    return BaseEntity.validator.extend({
-      customerId: EntityId.validator,
+    return BaseEntity.baseValidator.extend({
+      customerId: EntityId.validator.transform(EntityId.create),
       zipCode: z.string(),
       street: z.string(),
       neighborhood: z.string(),
@@ -16,15 +16,7 @@ export class CustomerAddress extends BaseEntity {
   }
 
   public static create(props: CustomerAddress.CreateProps): CustomerAddress {
-    this.validator.parse(props);
-
-    return new CustomerAddress({
-      ...props,
-      id: EntityId.create(props.id),
-      customerId: EntityId.create(props.customerId),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
+    return new CustomerAddress(this.validator.parse(props));
   }
 
   public update(props: CustomerAddress.CreateProps): void {
