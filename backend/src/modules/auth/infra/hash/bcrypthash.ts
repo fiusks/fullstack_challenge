@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 import { Hash } from '../../application/interfaces/hash';
 
 export class BcryptHash implements Hash {
