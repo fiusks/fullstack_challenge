@@ -1,0 +1,71 @@
+import { CustomerAddress, CustomerAddressRepository } from '../../../domain/';
+import { PrismaCustomerAddress } from './customer-address.model';
+import { PrismaClient } from '@prisma/client';
+import { FastifyInstance } from 'fastify';
+
+export class PrismaCustomerAddressRepository
+  implements CustomerAddressRepository
+{
+  private readonly prismaService: PrismaClient;
+
+  constructor(fastify: FastifyInstance) {
+    this.prismaService = fastify.prisma;
+  }
+
+  private convert(prismaAddress: PrismaCustomerAddress): CustomerAddress {
+    return CustomerAddress.create({
+      ...prismaAddress,
+      zipCode: prismaAddress.zipCode,
+      neighborhood: prismaAddress.neighborhood,
+    });
+  }
+
+  public async create(
+    customerAddress: CustomerAddress,
+  ): Promise<CustomerAddress> {
+    const dbCustomerAddress = await this.prismaService.address.create({
+      data: {
+        ...customerAddress.toJSON(),
+        customerId: customerAddress.customerId.id,
+        neighborhood: customerAddress.neighborhood,
+        zipCode: customerAddress.zipCode,
+        id: customerAddress.id.id,
+      },
+    });
+
+    return this.convert(dbCustomerAddress);
+  }
+
+  public async delete(id: string): Promise<void> {
+    await this.prismaService.address.delete({
+      where: { id },
+    });
+
+    return;
+  }
+
+  public async findAllByCustomerId(id: string): Promise<CustomerAddress[]> {
+    const customerAddresses = await this.prismaService.address.findMany({
+      where: { id },
+    });
+
+    return customerAddresses.map((address) => this.convert(address));
+  }
+
+  public async update(
+    customerAddress: CustomerAddress,
+  ): Promise<CustomerAddress> {
+    const dbCustomerAddress = await this.prismaService.address.update({
+      where: { id: customerAddress.id.id },
+
+      data: {
+        ...customerAddress.toJSON(),
+        customerId: customerAddress.customerId.id,
+        neighborhood: customerAddress.neighborhood,
+        zipCode: customerAddress.zipCode,
+      },
+    });
+
+    return this.convert(dbCustomerAddress);
+  }
+}
