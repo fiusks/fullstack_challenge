@@ -1,1 +1,1 @@
-export * from './customer-address-repository.factory';
+export * from './repository.factories';
