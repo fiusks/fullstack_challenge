@@ -1,4 +1,4 @@
-import { CustomerAddress } from '../entities';
+import { CustomerAddress } from '../../domain';
 
 export class CreateCustomerAddressDto {
   public readonly customerId: string;

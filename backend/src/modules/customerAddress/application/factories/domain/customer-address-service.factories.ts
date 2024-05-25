@@ -3,7 +3,7 @@ import {
   CreateCustomerAddress,
   DeleteCustomerAddress,
   UpdateCustomerAddress,
-} from '../../../domain';
+} from '../../services';
 
 import {
   customerAddressRepositoryFactory,

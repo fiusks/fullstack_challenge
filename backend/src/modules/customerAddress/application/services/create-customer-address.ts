@@ -1,8 +1,7 @@
-import { notFoundError } from '../../../common/domain';
-import { CustomerAddress } from '../entities';
-import { CustomerAddressRepository } from '../repositories';
-import { CustomerRepository } from '../../../customer';
+import { CustomerRepository } from 'src/modules/customer/domain';
+import { CustomerAddress, CustomerAddressRepository } from '../../domain';
 import { CreateCustomerAddressDto } from '../dtos';
+import { notFoundError } from 'src/modules/common/domain';
 
 export class CreateCustomerAddress {
   constructor(
