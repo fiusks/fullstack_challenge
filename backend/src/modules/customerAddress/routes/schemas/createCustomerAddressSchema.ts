@@ -1,6 +1,7 @@
 export const createCustomerAddressSchema = {
   type: 'object',
   required: [
+    'customerId',
     'zipCode',
     'street',
     'neighborhood',
