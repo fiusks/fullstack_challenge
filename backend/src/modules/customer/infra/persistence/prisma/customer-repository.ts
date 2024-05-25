@@ -6,25 +6,7 @@ export class PrismaCustomerRepository implements CustomerRepository {
   constructor(private readonly prismaService: PrismaClient) {}
 
   private convert(prismaCustomer: PrismaCustomer): Customer {
-    const { addresses: prismaAddresses, ...customerData } = prismaCustomer;
-
-    const addresses = (() => {
-      if (!prismaAddresses.length) return [];
-
-      return prismaAddresses.map((address) => {
-        return {
-          ...address,
-          customerId: prismaCustomer.id,
-        };
-      });
-    })();
-
-    const creatProps: Customer.CreateProps = {
-      ...customerData,
-      addresses,
-    };
-
-    return Customer.create(creatProps);
+    return Customer.create(prismaCustomer);
   }
 
   public async create(customer: Customer): Promise<Customer> {
@@ -40,7 +22,7 @@ export class PrismaCustomerRepository implements CustomerRepository {
         password: password.toJSON(),
         username,
       },
-      include: { addresses: true },
+      include: { address: true },
     });
 
     return this.convert(dbCustomer);
@@ -57,10 +39,16 @@ export class PrismaCustomerRepository implements CustomerRepository {
   public async findById(id: string): Promise<Customer | null> {
     const customer = await this.prismaService.customer.findFirst({
       where: { id },
-      include: { addresses: true },
+      include: { address: true },
     });
+    console.log(
+      '🚀 ~ PrismaCustomerRepository ~ findById ~ customer:',
+      customer,
+    );
 
     if (!customer) return null;
+    const oi = this.convert(customer);
+    console.log('🚀 ~ PrismaCustomerRepository ~ findById ~ oi:', oi);
 
     return this.convert(customer);
   }
@@ -68,7 +56,7 @@ export class PrismaCustomerRepository implements CustomerRepository {
   public async findByUsername(username: string): Promise<Customer | null> {
     const customer = await this.prismaService.customer.findFirst({
       where: { username },
-      include: { addresses: true },
+      include: { address: true },
     });
 
     if (!customer) return null;
@@ -79,7 +67,7 @@ export class PrismaCustomerRepository implements CustomerRepository {
   public async findByDocument(document: string): Promise<Customer | null> {
     const customer = await this.prismaService.customer.findFirst({
       where: { cpf: document },
-      include: { addresses: true },
+      include: { address: true },
     });
 
     if (!customer) return null;
@@ -98,7 +86,7 @@ export class PrismaCustomerRepository implements CustomerRepository {
         phone: customer?.phone,
         password: customer?.password.toJSON(),
       },
-      include: { addresses: true },
+      include: { address: true },
     });
 
     return this.convert(dbCustomer);

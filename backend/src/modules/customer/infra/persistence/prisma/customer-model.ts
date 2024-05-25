@@ -5,7 +5,7 @@ export interface PrismaCustomer {
   username: string;
   cpf: string;
   email: string;
-  addresses: PrismaCustomerAddress[];
+  address?: PrismaCustomerAddress;
   name: string;
   password: string;
   phone?: string;
