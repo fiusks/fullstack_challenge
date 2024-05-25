@@ -46,10 +46,6 @@ export class PrismaCustomerRepository implements CustomerRepository {
       where: { id },
       include: { address: true },
     });
-    console.log(
-      '🚀 ~ PrismaCustomerRepository ~ findById ~ customer:',
-      customer,
-    );
 
     if (!customer) return null;
 
