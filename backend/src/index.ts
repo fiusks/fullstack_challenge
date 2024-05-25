@@ -1,14 +1,9 @@
 import fastify from 'fastify';
-import prismaPlugin from './modules/plugin/prisma';
+import prismaPlugin from './modules/common/infra/http/fastify';
 
 const app = fastify();
 
 app.register(prismaPlugin);
-
-app.get('/category', async (request, reply) => {
-  const users = await app.prisma.category.findMany();
-  return users;
-});
 
 app.listen({ port: 3333 }, (err, address) => {
   if (err) {
