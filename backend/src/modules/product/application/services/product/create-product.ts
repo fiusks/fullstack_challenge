@@ -12,7 +12,7 @@ export class CreateProduct {
     private readonly categoryRepository: CategoryRepository,
   ) {}
 
-  async create(input: ProductInputDto): Promise<Product> {
+  async execute(input: ProductInputDto): Promise<Product> {
     const dbProduct = await this.productRepository.findByName(input.name);
 
     if (!dbProduct) {

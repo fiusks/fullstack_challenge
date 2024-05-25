@@ -4,7 +4,7 @@ import { CategoryRepository } from 'src/modules/product/domain';
 export class DeleteCategory {
   constructor(private readonly categoryRepository: CategoryRepository) {}
 
-  async delete(id: string): Promise<void> {
+  async execute(id: string): Promise<void> {
     const category = await this.categoryRepository.findById(id);
 
     if (!category) {

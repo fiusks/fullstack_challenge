@@ -4,7 +4,7 @@ import { ProductRepository } from 'src/modules/product/domain';
 export class DeleteProduct {
   constructor(private readonly productRepository: ProductRepository) {}
 
-  async delete(id: string): Promise<void> {
+  async execute(id: string): Promise<void> {
     const product = await this.productRepository.findById(id);
 
     if (!product) {
