@@ -24,18 +24,14 @@ export async function signUpRoute(fastify: FastifyInstance) {
       accessTokenProvider,
     );
 
-    try {
-      const session = await registerUser.execute({
-        email,
-        username,
-        name,
-        password,
-        cpf,
-      });
+    const session = await registerUser.execute({
+      email,
+      username,
+      name,
+      password,
+      cpf,
+    });
 
-      reply.send(session);
-    } catch (error) {
-      reply.status(400).send({ error: error.message });
-    }
+    reply.send(session);
   });
 }
