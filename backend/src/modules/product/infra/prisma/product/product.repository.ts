@@ -47,7 +47,6 @@ export class PrismaProductRepository implements ProductRepository {
   }
 
   async findByName(name: string): Promise<Product | null> {
-    console.log('🚀 ~ PrismaProductRepository ~ findByName ~ name:', name);
     const dbProduct = await this.prismaService.product.findFirst({
       where: { name },
       include: { category: true },

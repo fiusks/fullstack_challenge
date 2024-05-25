@@ -52,8 +52,6 @@ export class PrismaCustomerRepository implements CustomerRepository {
     );
 
     if (!customer) return null;
-    const oi = this.convert(customer);
-    console.log('🚀 ~ PrismaCustomerRepository ~ findById ~ oi:', oi);
 
     return this.convert(customer);
   }
