@@ -4,7 +4,7 @@ export interface PrismaCustomerAddress {
   neighborhood: string;
   zipCode: string;
   city: string;
-  complement: string;
+  complement: string | null;
   number: string;
   street: string;
   state: string;
