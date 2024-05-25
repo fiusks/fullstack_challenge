@@ -1,9 +1,9 @@
 import { z } from 'zod';
 
-import { CPF, Email, Password } from '../value-objects';
 import { EntityId } from '../../../common/domain/value-objects/entity-id.vo';
 import { BaseEntity } from '../../../common/domain/entities/base-entity';
 import { CustomerAddress } from '../../../customerAddress/domain';
+import { CPF, Email, Password } from 'src/modules/common/domain';
 
 export class Customer extends BaseEntity {
   public static get validator() {
@@ -54,37 +54,25 @@ export class Customer extends BaseEntity {
     return this.#cpf;
   }
 
-  public get phone(): string {
+  public get phone(): string | null {
     return this.#phone;
   }
 
-  public get birthday(): Date {
+  public get birthday(): Date | null {
     return this.#birthday;
   }
 
-  public get address(): CustomerAddress {
+  public get address(): CustomerAddress | null {
     return this.#address;
   }
 
-  public updateProfile(props: Partial<Customer.CreateProps>): void {
-    if (props.email) {
-      this.#email = Email.create(props.email);
-    }
-    if (props.password) {
-      this.#password = Password.create(props.password);
-    }
-    if (props.name) {
-      this.#name = props.name;
-    }
-    if (props.cpf) {
-      this.#cpf = CPF.create(props.cpf);
-    }
-    if (props.phone) {
-      this.#phone = props.phone;
-    }
-    if (props.birthday) {
-      this.#birthday = props.birthday;
-    }
+  public updateProfile(props: Customer.CreateProps): void {
+    this.#email = Email.create(props.email);
+    this.#password = Password.create(props.password);
+    this.#name = props.name;
+    this.#cpf = CPF.create(props.cpf);
+    this.#phone = props.phone;
+    this.#birthday = props.birthday;
   }
 
   public toJSON(): Customer.JSON {
@@ -97,7 +85,7 @@ export class Customer extends BaseEntity {
       cpf: this.#cpf.toJSON(),
       phone: this.#phone,
       birthday: this.#birthday,
-      address: this.#address.toJSON(),
+      address: this.#address?.toJSON() ?? null,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     };
@@ -108,9 +96,9 @@ export class Customer extends BaseEntity {
   #name: string;
   #email: Email;
   #cpf: CPF;
-  #phone: string;
-  #birthday: Date;
-  #address: CustomerAddress;
+  #phone: string | null;
+  #birthday: Date | null;
+  #address: CustomerAddress | null;
 
   constructor(props: Customer.Props) {
     super(props.id, props.createdAt, props.updatedAt);
@@ -133,9 +121,9 @@ export namespace Customer {
     password: string;
     name: string;
     cpf: string;
-    phone?: string;
-    birthday?: Date;
-    address?: CustomerAddress.CreateProps;
+    phone: string | null;
+    birthday: Date | null;
+    address: CustomerAddress.CreateProps | null;
     createdAt?: Date;
     updatedAt?: Date;
   };
@@ -147,9 +135,9 @@ export namespace Customer {
     password: string;
     name: string;
     cpf: string;
-    phone?: string;
-    birthday?: Date;
-    address: CustomerAddress;
+    phone: string | null;
+    birthday: Date | null;
+    address: CustomerAddress | null;
     createdAt: Date;
     updatedAt: Date;
   };
@@ -161,9 +149,9 @@ export namespace Customer {
     password: Password.JSON;
     name: string;
     cpf: CPF.JSON;
-    phone?: string;
-    birthday?: Date;
-    address: CustomerAddress.JSON;
+    phone: string | null;
+    birthday: Date | null;
+    address: CustomerAddress.JSON | null;
     createdAt: Date;
     updatedAt: Date;
   };
