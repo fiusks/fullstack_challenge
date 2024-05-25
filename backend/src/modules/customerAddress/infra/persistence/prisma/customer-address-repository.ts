@@ -1,16 +1,11 @@
 import { CustomerAddress, CustomerAddressRepository } from '../../../domain/';
 import { PrismaCustomerAddress } from './customer-address.model';
 import { PrismaClient } from '@prisma/client';
-import { FastifyInstance } from 'fastify';
 
 export class PrismaCustomerAddressRepository
   implements CustomerAddressRepository
 {
-  private readonly prismaService: PrismaClient;
-
-  constructor(fastify: FastifyInstance) {
-    this.prismaService = fastify.prisma;
-  }
+  constructor(private readonly prismaService: PrismaClient) {}
 
   private convert(prismaAddress: PrismaCustomerAddress): CustomerAddress {
     return CustomerAddress.create({
