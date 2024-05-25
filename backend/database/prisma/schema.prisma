@@ -51,7 +51,6 @@ model Address {
 
 model Order {
     id            String         @id @default(uuid())
-    orderNumber   Int
     totalValue    Decimal
     date          DateTime       @default(now()) @db.Date
     status        Boolean

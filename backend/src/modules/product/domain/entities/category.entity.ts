@@ -11,7 +11,7 @@ export class Category extends BaseEntity {
   }
 
   public static create(props: Category.CreateProps): Category {
-    return new Category(this.validator.parse(props));
+    return new Category(Category.validator.parse(props));
   }
 
   public get name(): string {
