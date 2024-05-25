@@ -13,17 +13,17 @@ import {
 import { createCategorySchema, updateCategorySchema } from './schemas/category';
 
 export default async function categoryRoutes(fastify: FastifyInstance) {
-  const customerAddressBasePath = 'category';
+  const categoriesBasePath = 'categories';
 
   fastify.register(
-    (customerAddressRoutes, opts, done) => {
-      customerAddressRoutes.get('/', async (request, reply) => {
+    (categoriesRoutes, opts, done) => {
+      categoriesRoutes.get('/', async (request, reply) => {
         const address = await listCategoryServiceFactory(fastify).execute();
 
         reply.send(address).status(200);
       });
 
-      customerAddressRoutes.post<{ Body: CreateCategoryInputDto }>('/', {
+      categoriesRoutes.post<{ Body: CreateCategoryInputDto }>('/', {
         schema: { body: createCategorySchema },
         handler: async (request, reply) => {
           const newAddress = await createCategoryServiceFactory(
@@ -34,7 +34,7 @@ export default async function categoryRoutes(fastify: FastifyInstance) {
         },
       });
 
-      customerAddressRoutes.delete('/:id', async (request, reply) => {
+      categoriesRoutes.delete('/:id', async (request, reply) => {
         await deleteCategoryServiceFactory(fastify).execute(
           request.params['id'],
         );
@@ -42,7 +42,7 @@ export default async function categoryRoutes(fastify: FastifyInstance) {
         reply.send().status(200);
       });
 
-      customerAddressRoutes.put<{ Body: UpdateCategoryInputDto }>('/', {
+      categoriesRoutes.put<{ Body: UpdateCategoryInputDto }>('/', {
         schema: { body: updateCategorySchema },
         handler: async (request, reply) => {
           const updatedAddress = updateCategoryServiceFactory(fastify).execute(
@@ -55,6 +55,6 @@ export default async function categoryRoutes(fastify: FastifyInstance) {
 
       done();
     },
-    { prefix: customerAddressBasePath },
+    { prefix: categoriesBasePath },
   );
 }
