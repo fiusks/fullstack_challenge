@@ -5,7 +5,7 @@ export abstract class BaseError extends Error {
   public readonly stack?: string;
 
   constructor({ code, message, stack, status, cause }: BaseError.CreateProps) {
-    // @ts-ignore
+    // @ts-expect-error super() expects a string
     super(message, { cause });
 
     this.code = code;

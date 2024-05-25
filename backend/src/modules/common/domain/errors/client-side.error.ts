@@ -1,4 +1,4 @@
-import { BaseError } from './base-error';
+import { BaseError } from './base.error';
 
 const DEFAULT_STATUS = 400;
 const DEFAULT_MESSAGE = 'Bad Request';
