@@ -48,7 +48,7 @@ export class CPF {
   }
 
   public static create(props: CPF.CreateProps): CPF {
-    return new CPF({ cpf: this.refinedValidator.parse(props) });
+    return new CPF({ cpf: CPF.refinedValidator.parse(props) });
   }
 
   public toJSON(): CPF.JSON {
