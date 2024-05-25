@@ -6,8 +6,8 @@ export class CreateCustomerDto {
   public readonly name: string;
   public readonly password: string;
   public readonly cpf: string;
-  public readonly birthday: Date | null;
-  public readonly phone: string | null;
+  public readonly birthday?: Date;
+  public readonly phone?: string;
 
   constructor(customer: Customer.JSON) {
     this.email = customer.email;
@@ -15,7 +15,7 @@ export class CreateCustomerDto {
     this.name = customer.name;
     this.password = customer.password;
     this.cpf = customer.cpf;
-    this.birthday = customer.birthday ?? null;
-    this.phone = customer.phone ?? null;
+    this.birthday = customer.birthday;
+    this.phone = customer.phone;
   }
 }
