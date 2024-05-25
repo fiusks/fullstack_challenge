@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - 3333:3333
+    environment:
+      PORT: 3333
+      JWT_SECRET_KEY: Tx2ddlSRR7BQ4fbMAPe74w3j5lTJo8Xn
+      PRISMA_DATABASE_URL: postgres://postgres:zITVv33rZ7cLmhiD@postgres:5432/devshop
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:alpine
+    environment:
+      POSTGRES_PASSWORD: zITVv33rZ7cLmhiD
+      POSTGRES_DB: devshop
+    ports:
+      - 5432:5432
