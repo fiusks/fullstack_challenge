@@ -5,9 +5,9 @@ export interface PrismaCustomer {
   username: string;
   cpf: string;
   email: string;
-  address?: PrismaCustomerAddress;
+  address: PrismaCustomerAddress | null;
   name: string;
   password: string;
-  phone?: string;
-  birthdate?: Date;
+  phone: string | null;
+  birthdate: Date | null;
 }

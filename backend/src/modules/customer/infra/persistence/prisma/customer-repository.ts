@@ -6,7 +6,12 @@ export class PrismaCustomerRepository implements CustomerRepository {
   constructor(private readonly prismaService: PrismaClient) {}
 
   private convert(prismaCustomer: PrismaCustomer): Customer {
-    return Customer.create(prismaCustomer);
+    return Customer.create({
+      ...prismaCustomer,
+      birthday: prismaCustomer.birthdate ?? undefined,
+      phone: prismaCustomer.phone ?? undefined,
+      address: prismaCustomer.address ?? undefined,
+    });
   }
 
   public async create(customer: Customer): Promise<Customer> {
