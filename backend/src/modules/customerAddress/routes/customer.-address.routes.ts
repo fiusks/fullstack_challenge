@@ -9,7 +9,7 @@ import {
 } from '../application';
 import { createCustomerAddressSchema } from './schemas';
 
-export default async function customerRoutes(fastify: FastifyInstance) {
+export default async function customerAddressRoutes(fastify: FastifyInstance) {
   const customerAddressBasePath = 'customer-address';
 
   fastify.register(
