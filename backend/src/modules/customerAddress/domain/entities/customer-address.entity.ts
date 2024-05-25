@@ -10,7 +10,7 @@ export class CustomerAddress extends BaseEntity {
       neighborhood: z.string(),
       city: z.string(),
       number: z.string(),
-      complement: z.string(),
+      complement: z.string().nullable(),
       state: z.string(),
     });
   }
@@ -69,7 +69,7 @@ export class CustomerAddress extends BaseEntity {
     return this.#number;
   }
 
-  public get complement(): string {
+  public get complement(): string | null {
     return this.#complement;
   }
 
@@ -83,7 +83,7 @@ export class CustomerAddress extends BaseEntity {
   #neighborhood: string;
   #city: string;
   #number: string;
-  #complement: string;
+  #complement: string | null;
   #state: string;
 
   constructor(props: CustomerAddress.Props) {
@@ -108,7 +108,7 @@ export namespace CustomerAddress {
     neighborhood: string;
     city: string;
     number: string;
-    complement: string;
+    complement: string | null;
     state: string;
     createdAt?: Date;
     updatedAt?: Date;
@@ -122,7 +122,7 @@ export namespace CustomerAddress {
     neighborhood: string;
     city: string;
     number: string;
-    complement: string;
+    complement: string | null;
     state: string;
     createdAt: Date;
     updatedAt: Date;
@@ -136,7 +136,7 @@ export namespace CustomerAddress {
     neighborhood: string;
     city: string;
     number: string;
-    complement: string;
+    complement: string | null;
     state: string;
     createdAt: string;
     updatedAt: string;
