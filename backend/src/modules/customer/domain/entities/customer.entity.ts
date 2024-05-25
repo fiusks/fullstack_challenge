@@ -17,19 +17,20 @@ export class Customer extends BaseEntity {
       cpf: z.string().transform((cpf) => CPF.create(cpf)),
       phone: z.string().nullable().optional(),
       birthday: z.date().nullable().optional(),
-      addresses: z.array(CustomerAddress.validator).default([]),
+      address: CustomerAddress.validator.nullable().optional(),
     });
   }
 
   public static create(props: Customer.CreateProps): Customer {
-    this.validator.parse(props);
-
+    const customerId = props.id
+      ? EntityId.create(props.id)
+      : EntityId.generate();
     return new Customer({
-      ...props,
-      id: new EntityId({ id: props.id }),
-      addresses: [],
       createdAt: new Date(),
       updatedAt: new Date(),
+      ...props,
+      id: customerId,
+      address: props.address ? CustomerAddress.create(props.address) : null,
     });
   }
 
@@ -61,8 +62,8 @@ export class Customer extends BaseEntity {
     return this.#birthday;
   }
 
-  public get addresses(): CustomerAddress[] {
-    return this.#addresses;
+  public get address(): CustomerAddress {
+    return this.#address;
   }
 
   public updateProfile(props: Partial<Customer.CreateProps>): void {
@@ -96,7 +97,7 @@ export class Customer extends BaseEntity {
       cpf: this.#cpf.toJSON(),
       phone: this.#phone,
       birthday: this.#birthday,
-      addresses: this.#addresses.map((address) => address.toJSON()),
+      address: this.#address.toJSON(),
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     };
@@ -109,7 +110,7 @@ export class Customer extends BaseEntity {
   #cpf: CPF;
   #phone: string;
   #birthday: Date;
-  #addresses: CustomerAddress[];
+  #address: CustomerAddress;
 
   constructor(props: Customer.Props) {
     super(props.id, props.createdAt, props.updatedAt);
@@ -120,13 +121,7 @@ export class Customer extends BaseEntity {
     this.#password = Password.create(props.password);
     this.#phone = props.phone;
     this.#cpf = CPF.create(props.cpf);
-    this.#addresses = props.addresses.map((address) =>
-      CustomerAddress.create({
-        ...address,
-        id: address.id.toJSON(),
-        customerId: props.id.toJSON(),
-      }),
-    );
+    this.#address = props.address;
   }
 }
 
@@ -140,7 +135,7 @@ export namespace Customer {
     cpf: string;
     phone?: string;
     birthday?: Date;
-    addresses?: CustomerAddress.CreateProps[];
+    address?: CustomerAddress.CreateProps;
     createdAt?: Date;
     updatedAt?: Date;
   };
@@ -154,7 +149,7 @@ export namespace Customer {
     cpf: string;
     phone?: string;
     birthday?: Date;
-    addresses: CustomerAddress.Props[];
+    address: CustomerAddress;
     createdAt: Date;
     updatedAt: Date;
   };
@@ -168,7 +163,7 @@ export namespace Customer {
     cpf: CPF.JSON;
     phone?: string;
     birthday?: Date;
-    addresses: CustomerAddress.JSON[];
+    address: CustomerAddress.JSON;
     createdAt: Date;
     updatedAt: Date;
   };
