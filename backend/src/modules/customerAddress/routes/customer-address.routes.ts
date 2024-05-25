@@ -7,19 +7,26 @@ import {
   findCustomerAddressServiceFactory,
   updateCustomerAddressServiceFactory,
 } from '../application';
-import { createCustomerAddressSchema } from './schemas';
+import {
+  createCustomerAddressSchema,
+  deleteCustomerAddressSchema,
+  findCustomerAddressSchema,
+} from './schemas';
 
 export default async function customerAddressRoutes(fastify: FastifyInstance) {
   const customerAddressBasePath = 'customer-address';
 
   fastify.register(
     (customerAddressRoutes, opts, done) => {
-      customerAddressRoutes.get('/:customerId', async (request, reply) => {
-        const address = await findCustomerAddressServiceFactory(
-          fastify,
-        ).execute(request.params['customerId']);
+      customerAddressRoutes.get<{ Params: { id: string } }>('/:customerId', {
+        schema: { params: { findCustomerAddressSchema } },
+        handler: async (request, reply) => {
+          const { id } = request.params;
+          const address =
+            await findCustomerAddressServiceFactory(fastify).execute(id);
 
-        reply.send(address).status(200);
+          reply.send(address).status(200);
+        },
       });
 
       customerAddressRoutes.post<{ Body: CreateCustomerAddressDto }>('/', {
@@ -33,12 +40,14 @@ export default async function customerAddressRoutes(fastify: FastifyInstance) {
         },
       });
 
-      customerAddressRoutes.delete('/:id', async (request, reply) => {
-        await deleteCustomerAddressServiceFactory(fastify).execute(
-          request.params['id'],
-        );
+      customerAddressRoutes.delete<{ Params: { id: string } }>('/:id', {
+        schema: { params: deleteCustomerAddressSchema },
+        handler: async (request, reply) => {
+          const { id } = request.params;
+          await deleteCustomerAddressServiceFactory(fastify).execute(id);
 
-        reply.send().status(200);
+          reply.send().status(200);
+        },
       });
 
       customerAddressRoutes.put<{ Body: CreateCustomerAddressDto }>('/', {

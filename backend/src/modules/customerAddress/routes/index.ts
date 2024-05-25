@@ -1,1 +1,1 @@
-export * from './customer.-address.routes';
+export * from './customer-address.routes';
