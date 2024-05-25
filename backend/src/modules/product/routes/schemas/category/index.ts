@@ -1,2 +1,2 @@
-export * from './createProductchema';
-export * from './updateProductSchema';
+export * from './createCategorySchema';
+export * from './updateCategorySchema';
