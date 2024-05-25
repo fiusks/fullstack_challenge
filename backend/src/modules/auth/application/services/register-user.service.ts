@@ -1,15 +1,16 @@
 import { Password } from 'src/modules/common/domain';
 import { User, UserAlreadyExistsError, UserRepository } from '../../domain';
-import { CreateUserInputDto, UserDto } from '../dto';
-import { Hash } from '../interfaces';
+import { CreateUserInputDto, SessionDto, UserDto } from '../dto';
+import { AccessTokenProvider, Hash } from '../interfaces';
 
 export class RegisterUserService {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly hash: Hash,
+    private readonly accessTokenProvider: AccessTokenProvider,
   ) {}
 
-  public async register(input: CreateUserInputDto): Promise<UserDto> {
+  public async execute(input: CreateUserInputDto): Promise<SessionDto> {
     const [alreadyExistsByEmail, alreadyExistsByCpf, alreadyExistsByUsername] =
       await Promise.all([
         this.userRepository.hasByEmail(input.email),
@@ -29,6 +30,12 @@ export class RegisterUserService {
     const hashedPassword = await this.hash.make(password.value);
     const user = User.create({ ...input, hashedPassword });
     await this.userRepository.save(user);
-    return new UserDto(user.id.id, user.email.value, user.username.value);
+    const userDto = new UserDto(
+      user.id.id,
+      user.email.value,
+      user.username.value,
+    );
+    const token = this.accessTokenProvider.generateToken(userDto);
+    return new SessionDto(userDto, token);
   }
 }
