@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-import { User, UserRepository } from '~/modules/auth/domain';
-import { PrismaCustomer } from '~/modules/customer';
+import { User, UserRepository } from 'src/modules/auth/domain';
+import { PrismaCustomer } from 'src/modules/customer';
 
 export class PrismaUserRepository implements UserRepository {
   constructor(private readonly prismaService: PrismaClient) {}
@@ -48,11 +48,11 @@ export class PrismaUserRepository implements UserRepository {
   public async save(user: User): Promise<void> {
     await this.prismaService.customer.create({
       data: {
-        cpf: user.cpf.toJSON(),
-        email: user.email.toJSON(),
-        id: user.id.toJSON(),
+        cpf: user.cpf.cpf,
+        email: user.email.value,
+        id: user.id.id,
         password: user.hashedPassword,
-        username: user.username.toJSON(),
+        username: user.username.value,
         name: user.name,
       },
     });
