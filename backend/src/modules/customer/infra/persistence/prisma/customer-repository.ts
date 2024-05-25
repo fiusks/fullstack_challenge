@@ -8,9 +8,9 @@ export class PrismaCustomerRepository implements CustomerRepository {
   private convert(prismaCustomer: PrismaCustomer): Customer {
     return Customer.create({
       ...prismaCustomer,
-      birthday: prismaCustomer.birthdate ?? undefined,
-      phone: prismaCustomer.phone ?? undefined,
-      address: prismaCustomer.address ?? undefined,
+      birthday: prismaCustomer.birthdate,
+      phone: prismaCustomer.phone,
+      address: prismaCustomer.address,
     });
   }
 
