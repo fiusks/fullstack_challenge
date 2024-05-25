@@ -5,11 +5,8 @@ import {
   FindCustomerAddress,
   UpdateCustomerAddress,
 } from '../../services';
-
-import {
-  customerAddressRepositoryFactory,
-  customerRepositoryFactory,
-} from '../infra';
+import { customerAddressRepositoryFactory } from '../infra';
+import { customerRepositoryFactory } from 'src/modules/customer/application/factories';
 
 export const deleteCustomerAddressServiceFactory = (
   fastify: FastifyInstance,
