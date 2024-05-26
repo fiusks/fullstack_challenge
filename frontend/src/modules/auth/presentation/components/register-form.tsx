@@ -4,26 +4,27 @@ import { getToken, setToken } from "@/utils";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useState, FormEvent } from "react";
 
-export function LoginForm(){
-    const router= useRouter()
-    
+export function RegisterForm(){
+    const router = useRouter()
+
     async function handleSubmit (event: FormEvent<HTMLFormElement>) {
       event.preventDefault();
       const formData = new FormData(event.currentTarget)
 
       const values = Object.fromEntries(formData.entries());
-      
+      console.log('🚀 ~ values:', values)
+
       try {
         const response = await fetch("http://localhost:3333/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(values),
+          body: formData,
         });
 
         if (response.ok) {
-          
+          console.log("🚀 ~ handleSubmit ~ response:", response)
           const data = await response.json();
           
           setToken(data.token)
@@ -46,8 +47,41 @@ export function LoginForm(){
               type="email"
               id="email"
               name="email"
-              className="border border-gray-100 rounded-md p-3 bg-gray-200 text-xs w-72"
+              className="border border-gray-100 rounded-md p-3 bg-gray-100 text-xs w-72"
               placeholder="johndue@mail.com"
+            />
+
+            <label htmlFor="email:" className="text-xs text-gray-600 font-medium">
+              Nome completo
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              className="border border-gray-100 rounded-md p-3 bg-gray-100 text-xs w-72"
+              placeholder="Rua dos Bobos, 0"
+            />
+
+            <label htmlFor="email:" className="text-xs text-gray-600 font-medium">
+              Username
+            </label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              className="border border-gray-100 rounded-md p-3 bg-gray-100 text-xs w-72"
+              placeholder="Rua dos Bobos, 0"
+            />
+
+            <label htmlFor="email:" className="text-xs text-gray-600 font-medium">
+              Telefone
+            </label>
+            <input
+              type="text"
+              id="phone"
+              name="phone"
+              className="border border-gray-100 rounded-md p-3 bg-gray-100 text-xs w-72"
+              placeholder="Rua dos Bobos, 0"
             />
 
             <label htmlFor="password" className="text-xs text-gray-600 font-medium ">
@@ -65,7 +99,7 @@ export function LoginForm(){
               type="submit"
               className="bg-blue-500 text-white rounded-md p-2 hover:bg-blue-600 transition duration-200 ease-in-out text-sm"
             >
-              Login
+              Criar conta
             </button>
           </div>
         </form>
