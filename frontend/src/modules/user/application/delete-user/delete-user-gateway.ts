@@ -1,4 +1,5 @@
-import { HttpClient } from "@/modules/lorem";
+
+import { HttpClient } from "@/modules/common";
 import { DeleteUser } from "../../domain/usecases/delete-user";
 
 

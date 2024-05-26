@@ -1,4 +1,4 @@
-import { HttpClient } from "@/modules/lorem";
+import { HttpClient } from "@/modules/common";
 
 import { CreateUserDto, User } from "../../domain";
 import { CreateUser } from "../../domain/usecases/create-user";
