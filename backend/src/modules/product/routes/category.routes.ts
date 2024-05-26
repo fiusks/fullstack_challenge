@@ -1,17 +1,20 @@
 // src/modules/customer/routes/customerRoutes.ts
 import { FastifyInstance } from 'fastify';
 import {
-  createCategoryServiceFactory,
-  deleteCategoryServiceFactory,
-  listCategoryServiceFactory,
-  updateCategoryServiceFactory,
-} from '../application/factories';
-import {
   CreateCategoryInputDto,
   UpdateCategoryInputDto,
 } from '../application/dtos';
-import { createCategorySchema, updateCategorySchema } from './schemas/category';
-import { deleteCategorySchema } from './schemas/category/delete-category.schema';
+import {
+  listCategoryServiceFactory,
+  createCategoryServiceFactory,
+  deleteCategoryServiceFactory,
+  updateCategoryServiceFactory,
+} from '../application/factories';
+import {
+  createCategorySchema,
+  deleteCategorySchema,
+  updateCategorySchema,
+} from './schemas';
 
 export default async function categoryRoutes(fastify: FastifyInstance) {
   const categoriesBasePath = 'categories';

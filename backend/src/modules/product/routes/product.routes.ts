@@ -1,17 +1,17 @@
 // src/modules/customer/routes/customerRoutes.ts
 import { FastifyInstance } from 'fastify';
+import { ProductInputDto } from '../application/dtos';
 import {
+  listProductServiceFactory,
   createProductServiceFactory,
   deleteProductServiceFactory,
-  listProductServiceFactory,
   updateProductServiceFactory,
 } from '../application/factories';
 import {
   createProductSchema,
   deleteProductSchema,
   updateProductSchema,
-} from './schemas/product';
-import { ProductInputDto } from '../application/dtos';
+} from './schemas';
 
 export default async function productRoutes(fastify: FastifyInstance) {
   const customerAddressBasePath = 'product';
