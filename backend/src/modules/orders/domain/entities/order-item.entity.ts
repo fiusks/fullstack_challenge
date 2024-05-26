@@ -1,6 +1,6 @@
-import { OrderItemAmount } from '../value-objects/order-item-amount.vo';
-import { BaseEntity } from 'src/modules/common/domain';
-import { Product } from 'src/modules/product';
+import { BaseEntity } from '~/modules/common/domain';
+import { Product } from '~/modules/product';
+import { OrderItemAmount } from '../value-objects';
 
 export class OrderItem extends BaseEntity {
   public static get validator() {

@@ -1,6 +1,5 @@
 import { FastifyInstance } from 'fastify';
-import { AccessTokenProvider } from '../../application/interfaces';
-import { UserDto } from '../../application/dto';
+import { AccessTokenProvider, UserDto } from '../../application';
 
 export class FastifyJwtAccessTokenProvider implements AccessTokenProvider {
   constructor(private readonly fastify: FastifyInstance) {}

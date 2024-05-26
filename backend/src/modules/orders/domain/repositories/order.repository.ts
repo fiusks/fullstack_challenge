@@ -1,4 +1,4 @@
-import { Order } from '../entities/order.entity';
+import { Order } from '../entities';
 
 export interface OrderRepository {
   create(input: Order.CreateProps): Promise<Order>;

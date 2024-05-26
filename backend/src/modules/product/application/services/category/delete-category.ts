@@ -1,5 +1,5 @@
-import { notFoundError } from 'src/modules/common/domain';
-import { CategoryRepository } from 'src/modules/product/domain';
+import { notFoundError } from '~/modules/common/domain';
+import { CategoryRepository } from '~/modules/product/domain';
 
 export class DeleteCategory {
   constructor(private readonly categoryRepository: CategoryRepository) {}

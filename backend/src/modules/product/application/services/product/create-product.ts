@@ -1,10 +1,10 @@
-import { notFoundError } from 'src/modules/common/domain';
+import { notFoundError } from '~/modules/common/domain';
 import {
   CategoryRepository,
   Product,
   ProductRepository,
-} from 'src/modules/product/domain';
-import { ProductInputDto } from '../../dtos/product';
+} from '~/modules/product/domain';
+import { ProductInputDto } from '../../dtos';
 
 export class CreateProduct {
   constructor(
@@ -15,7 +15,7 @@ export class CreateProduct {
   async execute(input: ProductInputDto): Promise<Product> {
     const dbProduct = await this.productRepository.findByName(input.name);
 
-    if (!dbProduct) {
+    if (dbProduct) {
       throw notFoundError('Produto já cadastrado na base');
     }
 

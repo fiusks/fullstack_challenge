@@ -1,4 +1,4 @@
-import { Product } from 'src/modules/product/domain';
+import { Product } from '~/modules/product/domain';
 
 export class UpdateProductInputDto {
   public readonly id: string;

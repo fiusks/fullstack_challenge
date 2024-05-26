@@ -5,13 +5,16 @@
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.build.json",
     "start": "ts-node src/index.ts",
     "start:prod": "node dist/index.js",
     "dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/index.ts"
   },
   "prisma": {
     "schema": "database/prisma/schema.prisma"
+  },
+  "_moduleAliases": {
+    "~": "build"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +28,7 @@
     "fastify": "^4.27.0",
     "fastify-plugin": "^4.5.1",
     "joi": "^17.13.1",
+    "module-alias": "^2.2.3",
     "uuid": "^9.0.1",
     "zod": "^3.23.8"
   },

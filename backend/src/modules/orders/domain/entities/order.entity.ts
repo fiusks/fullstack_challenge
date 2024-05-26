@@ -1,5 +1,6 @@
-import { BaseEntity } from 'src/modules/common/domain';
 import z from 'zod';
+
+import { BaseEntity } from '~/modules/common/domain';
 import { OrderItem } from './order-item.entity';
 
 export class Order extends BaseEntity {

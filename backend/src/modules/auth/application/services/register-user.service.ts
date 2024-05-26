@@ -1,4 +1,4 @@
-import { Password } from 'src/modules/common/domain';
+import { Password } from '~/modules/common/domain';
 import { User, UserAlreadyExistsError, UserRepository } from '../../domain';
 import { CreateUserInputDto, SessionDto, UserDto } from '../dto';
 import { AccessTokenProvider, Hash } from '../interfaces';

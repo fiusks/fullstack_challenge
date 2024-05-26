@@ -1,4 +1,4 @@
-import { unprocessableEntityError } from 'src/modules/common/domain';
+import { unprocessableEntityError } from '~/modules/common/domain';
 import { Customer, CustomerRepository } from '../../domain';
 import { UpdateCustomerDto } from '../dtos';
 
@@ -12,11 +12,7 @@ export class UpdateCustomerService {
       throw unprocessableEntityError('Usuário não encontrado');
     }
 
-    customer.updateProfile({
-      ...props,
-      phone: props.phone ?? undefined,
-      birthday: props.birthday ?? undefined,
-    });
+    customer.updateProfile({ ...props, address: null });
 
     return this.customerRepository.update(customer);
   }

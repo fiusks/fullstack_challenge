@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { Category, CategoryRepository } from 'src/modules/product/domain';
+import { Category, CategoryRepository } from '~/modules/product/domain';
 import { PrismaCategoryModel } from './category.model';
 
 export class PrismaCategoryRepository implements CategoryRepository {

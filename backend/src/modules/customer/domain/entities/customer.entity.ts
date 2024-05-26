@@ -1,9 +1,12 @@
 import { z } from 'zod';
-
-import { EntityId } from '../../../common/domain/value-objects/entity-id.vo';
-import { BaseEntity } from '../../../common/domain/entities/base-entity';
-import { CustomerAddress } from '../../../customerAddress/domain';
-import { CPF, Email, Password } from 'src/modules/common/domain';
+import {
+  BaseEntity,
+  Email,
+  Password,
+  CPF,
+  EntityId,
+} from '~/modules/common/domain';
+import { CustomerAddress } from '~/modules/customerAddress';
 
 export class Customer extends BaseEntity {
   public static get validator() {

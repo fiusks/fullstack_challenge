@@ -1,5 +1,5 @@
-import { notFoundError } from 'src/modules/common/domain';
-import { Category, CategoryRepository } from 'src/modules/product/domain';
+import { notFoundError } from '~/modules/common/domain';
+import { Category, CategoryRepository } from '~/modules/product/domain';
 import { UpdateCategoryInputDto } from '../../dtos';
 
 export class UpdateCategory {

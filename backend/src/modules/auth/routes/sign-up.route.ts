@@ -1,8 +1,7 @@
 // src/modules/auth/routes/authRoutes.ts
 
 import { FastifyInstance } from 'fastify';
-import { RegisterUserService } from '../application/services/register-user.service';
-import { userRepositoryFactory } from '../application';
+import { RegisterUserService, userRepositoryFactory } from '../application';
 import { BcryptHash, FastifyJwtAccessTokenProvider } from '../infra';
 
 export async function signUpRoute(fastify: FastifyInstance) {

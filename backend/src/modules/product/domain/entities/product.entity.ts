@@ -1,5 +1,5 @@
-import { BaseEntity, EntityId } from '../../../common/domain';
 import { z } from 'zod';
+import { BaseEntity, EntityId } from '~/modules/common/domain';
 import { Category } from './category.entity';
 
 export class Product extends BaseEntity {

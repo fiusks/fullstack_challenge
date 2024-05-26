@@ -1,5 +1,5 @@
-import { BaseEntity, EntityId } from '../../../common/domain/';
 import { z } from 'zod';
+import { BaseEntity, EntityId } from '~/modules/common/domain';
 
 export class CustomerAddress extends BaseEntity {
   public static get validator() {

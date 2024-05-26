@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-import { Product, ProductRepository } from 'src/modules/product/domain';
+
+import { Product, ProductRepository } from '~/modules/product/domain';
 import { PrismaProductModel } from './product-model';
 
 export class PrismaProductRepository implements ProductRepository {

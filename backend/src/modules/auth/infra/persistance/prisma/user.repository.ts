@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-import { User, UserRepository } from 'src/modules/auth/domain';
-import { PrismaCustomer } from 'src/modules/customer';
+import { UserRepository, User } from '~/modules/auth/domain';
+import { PrismaCustomer } from '~/modules/customer';
 
 export class PrismaUserRepository implements UserRepository {
   constructor(private readonly prismaService: PrismaClient) {}

@@ -1,7 +1,6 @@
 import { FastifyInstance } from 'fastify';
-import { userRepositoryFactory } from '../application';
+import { userRepositoryFactory, ValidateSigninService } from '../application';
 import { BcryptHash, FastifyJwtAccessTokenProvider } from '../infra';
-import { ValidateSigninService } from '../application/services/validate-signin.service';
 
 export async function loginRoute(fastify: FastifyInstance) {
   fastify.post('/login', async (request, reply) => {

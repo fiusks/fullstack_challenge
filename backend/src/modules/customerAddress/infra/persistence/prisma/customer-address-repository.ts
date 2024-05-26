@@ -1,4 +1,7 @@
-import { CustomerAddress, CustomerAddressRepository } from '../../../domain/';
+import {
+  CustomerAddressRepository,
+  CustomerAddress,
+} from '~/modules/customerAddress/domain';
 import { PrismaCustomerAddress } from './customer-address.model';
 import { PrismaClient } from '@prisma/client';
 

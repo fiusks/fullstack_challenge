@@ -1,4 +1,4 @@
-import { PrismaCustomerAddress } from 'src/modules/customerAddress';
+import { PrismaCustomerAddress } from '~/modules/customerAddress';
 
 export interface PrismaCustomer {
   id: string;

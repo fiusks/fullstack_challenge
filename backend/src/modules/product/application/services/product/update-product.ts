@@ -1,10 +1,10 @@
-import { notFoundError } from 'src/modules/common/domain';
+import { notFoundError } from '~/modules/common/domain';
 import {
   CategoryRepository,
   Product,
   ProductRepository,
-} from 'src/modules/product/domain';
-import { UpdateProductInputDto } from '../../dtos/product';
+} from '~/modules/product/domain';
+import { UpdateProductInputDto } from '../../dtos';
 
 export class UpdateProduct {
   constructor(

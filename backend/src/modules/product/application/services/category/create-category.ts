@@ -1,5 +1,5 @@
-import { notFoundError } from 'src/modules/common/domain';
-import { Category, CategoryRepository } from 'src/modules/product/domain';
+import { notFoundError } from '~/modules/common/domain';
+import { CategoryRepository, Category } from '~/modules/product/domain';
 import { CreateCategoryInputDto } from '../../dtos';
 
 export class CreateCategory {
@@ -10,7 +10,7 @@ export class CreateCategory {
 
     const dbcategory = await this.categoryRepository.findByName(input.name);
 
-    if (!dbcategory) {
+    if (dbcategory) {
       throw notFoundError('Categoria já cadastrado na base');
     }
 

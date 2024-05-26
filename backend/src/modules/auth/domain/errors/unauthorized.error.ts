@@ -1,4 +1,4 @@
-import { ClientSideError } from 'src/modules/common/domain';
+import { ClientSideError } from '~/modules/common/domain';
 
 export class UnauthorizedError extends ClientSideError {
   constructor() {

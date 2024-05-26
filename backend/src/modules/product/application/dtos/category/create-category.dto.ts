@@ -1,4 +1,4 @@
-import { Category } from 'src/modules/product/domain';
+import { Category } from '~/modules/product';
 
 export class CreateCategoryInputDto {
   public readonly name: string;

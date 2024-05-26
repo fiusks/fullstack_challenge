@@ -1,5 +1,5 @@
+import { EntityId } from '~/modules/common/domain';
 import { Category } from './category.entity';
-import { EntityId } from '../../../common/domain';
 
 describe('Category', () => {
   const mockCategoryProps: Category.CreateProps = {

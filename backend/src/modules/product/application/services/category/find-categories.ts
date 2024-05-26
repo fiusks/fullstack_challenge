@@ -1,4 +1,4 @@
-import { Category, CategoryRepository } from 'src/modules/product/domain';
+import { Category, CategoryRepository } from '~/modules/product/domain';
 
 export class FindAllCategories {
   constructor(private readonly categoryRepository: CategoryRepository) {}
