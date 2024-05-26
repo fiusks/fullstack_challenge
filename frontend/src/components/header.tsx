@@ -1,9 +1,14 @@
 import Logo from "@/assets/grupo-boticario.svg";
+import { getToken, isAuthenticated, removeToken } from "@/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { BsHandbag } from "react-icons/bs";
 
 export function Header() {
+
+
   return (
     <header className="flex flex-row items-center justify-between w-full px-8 py-2 bg-white">
       <Image src={Logo} alt="Logo Boticário" style={{ height: 30, width: "auto" }} />
@@ -36,6 +41,22 @@ export function Header() {
             <p className="text-xs pl-1">Sacola</p>
           </Link>
         </div>
+
+        {isAuthenticated()?<Link
+            href="/login"
+            className="text-black hover:text-blue-500 duration-100"
+            style={{
+              fontSize: 12,
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              marginLeft: 22
+            }}
+          >
+            <button onSubmit={()=>removeToken}>Sair</button>
+        </Link>:null}
+        
+        
       </div>
     </header>
   );

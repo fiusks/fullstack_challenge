@@ -37,7 +37,6 @@ export function RegisterForm(){
     };
 
     return(
-        <>
          <form onSubmit={handleSubmit}>
           <div className="flex flex-col space-y-4">
             <label htmlFor="email:" className="text-xs text-gray-600 font-medium">
@@ -103,6 +102,5 @@ export function RegisterForm(){
             </button>
           </div>
         </form>
-        </>
     )
 }

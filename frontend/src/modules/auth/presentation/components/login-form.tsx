@@ -4,10 +4,10 @@ import { getToken, setToken } from "@/utils";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useState, FormEvent } from "react";
 
-export function LoginForm(){
-    const router= useRouter()
+export function LoginForm() {
+    const router = useRouter()
     
-    async function handleSubmit (event: FormEvent<HTMLFormElement>) {
+    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
       event.preventDefault();
       const formData = new FormData(event.currentTarget)
 
@@ -28,7 +28,7 @@ export function LoginForm(){
           
           setToken(data.token)
           
-          router.push('/dashboard')
+          router.push('/')
         } 
       } catch (error) {
         console.error("Error occurred during login:", error);
@@ -36,12 +36,12 @@ export function LoginForm(){
     };
 
     return(
-        <>
          <form onSubmit={handleSubmit}>
           <div className="flex flex-col space-y-4">
             <label htmlFor="email:" className="text-xs text-gray-600 font-medium">
               Email
             </label>
+
             <input
               type="email"
               id="email"
@@ -69,6 +69,5 @@ export function LoginForm(){
             </button>
           </div>
         </form>
-        </>
     )
 }

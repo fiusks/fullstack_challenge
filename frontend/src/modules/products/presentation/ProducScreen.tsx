@@ -9,7 +9,7 @@ import { Product } from "./components";
 
 export default function Cart() {
 
-  // const router = useRouter();
+  const router = useRouter();
   
   // useLayoutEffect(() => {
   //   getToken()

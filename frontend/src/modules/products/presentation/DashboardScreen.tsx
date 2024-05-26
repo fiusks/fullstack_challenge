@@ -1,12 +1,12 @@
 import { Header, ProductsList, Search } from "@/components";
-import { GetProducts, Product } from "../domain";
-import { useEffect } from "react";
+import { Product } from "../domain";
 
-interface DashboardScreenProps {
-  products: Product[];
+
+export interface DashboardScreenProps {
+  // products: Product[];
 }
 
-export default function DashboardScreen() {
+export default function DashboardScreen({}: DashboardScreenProps) {
   return (
     <main className="flex-1 flex-col items-center justify-between bg-neutral-50 rounded-lg">
       <Header />

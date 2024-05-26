@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { LoginForm } from "./components";
 
-export default function LoginScreen() {
+export function LoginScreen() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gradient-to-r from-purple-500 to-pink-500">
       <div className="flex flex-col justify-center items-center p-8 bg-white rounded-xl drop-shadow-xl">
@@ -16,7 +16,8 @@ export default function LoginScreen() {
           </p>
         </div>
 
-        <LoginForm />
+        <LoginForm/>
+       
       </div>
     </main>
   );
