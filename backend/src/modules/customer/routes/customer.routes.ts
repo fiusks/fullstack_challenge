@@ -1,13 +1,11 @@
 import { FastifyInstance } from 'fastify';
 import {
-  CreateCustomerDto,
   UpdateCustomerDto,
-  createCustomerServiceFactory,
   deleteCustomerServiceFactory,
   findCustomerServiceFactory,
   updateCustomerServiceFactory,
 } from '../application';
-import { createCustomerSchema, updateCustomerSchema } from './schemas';
+import { updateCustomerSchema } from './schemas';
 
 export default async function customerRoutes(fastify: FastifyInstance) {
   const customerAddressBasePath = 'customer';
@@ -21,17 +19,6 @@ export default async function customerRoutes(fastify: FastifyInstance) {
         );
 
         reply.send(address).status(200);
-      });
-
-      customerAddressRoutes.post<{ Body: CreateCustomerDto }>('/', {
-        schema: { body: createCustomerSchema },
-        handler: async (request, reply) => {
-          const newAddress = await createCustomerServiceFactory(
-            fastify,
-          ).execute(request.body);
-
-          reply.send(newAddress).status(200);
-        },
       });
 
       customerAddressRoutes.delete('/:id', async (request, reply) => {

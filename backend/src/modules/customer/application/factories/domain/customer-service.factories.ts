@@ -1,7 +1,6 @@
 import { FastifyInstance } from 'fastify';
 
 import {
-  CreateCustomerService,
   DeleteCustomerService,
   FindCustomerByUsername,
   UpdateCustomerService,
@@ -14,10 +13,6 @@ export const deleteCustomerServiceFactory = (fastify: FastifyInstance) => {
 
 export const findCustomerServiceFactory = (fastify: FastifyInstance) => {
   return new FindCustomerByUsername(customerRepositoryFactory(fastify));
-};
-
-export const createCustomerServiceFactory = (fastify: FastifyInstance) => {
-  return new CreateCustomerService(customerRepositoryFactory(fastify));
 };
 
 export const updateCustomerServiceFactory = (fastify: FastifyInstance) => {
