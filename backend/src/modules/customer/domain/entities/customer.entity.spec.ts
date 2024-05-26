@@ -12,6 +12,7 @@ describe('Customer', () => {
       cpf: '64551379069',
       phone: '71988815894',
       birthday: new Date('1990-01-01'),
+      address: null,
     };
   });
 
@@ -32,12 +33,14 @@ describe('Customer', () => {
     test('should update profile properties with valid props', () => {
       const customer = Customer.create(validProps);
       const updatedProps = {
+        username: validProps.username,
         email: 'updated@example.com',
         password: 'updated_password123',
         name: 'Updated User',
         cpf: '64551379069',
         phone: '71988815893',
         birthday: new Date('2000-01-01'),
+        address: null,
       };
       customer.updateProfile(updatedProps);
       expect(customer.email.toJSON()).toBe(updatedProps.email);
@@ -51,7 +54,18 @@ describe('Customer', () => {
     test('should throw an error with invalid props', () => {
       const customer = Customer.create(validProps);
       const invalidProps = { email: 'invalid_email' };
-      expect(() => customer.updateProfile(invalidProps)).toThrow();
+
+      const updatedProps = {
+        ...invalidProps,
+        username: validProps.username,
+        password: 'updated_password123',
+        name: 'Updated User',
+        cpf: '64551379069',
+        phone: '71988815893',
+        birthday: new Date('2000-01-01'),
+        address: null,
+      };
+      expect(() => customer.updateProfile(updatedProps)).toThrow();
     });
   });
 });

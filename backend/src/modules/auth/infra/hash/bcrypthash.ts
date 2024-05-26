@@ -1,5 +1,5 @@
-import * as bcrypt from 'bcrypt';
-import { Hash } from '../../application';
+import * as bcrypt from 'bcryptjs';
+import { Hash } from '../../application/interfaces/hash';
 
 export class BcryptHash implements Hash {
   async make(value: string): Promise<string> {

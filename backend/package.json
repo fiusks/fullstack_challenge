@@ -5,9 +5,9 @@
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsc -p ./tsconfig.build.json",
     "start": "ts-node src/index.ts",
-    "start:prod": "node dist/index.js",
+    "start:prod": "node build/index.js",
     "dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/index.ts"
   },
   "prisma": {
@@ -23,7 +23,7 @@
     "@fastify/cors": "^8.0.0",
     "@fastify/jwt": "^8.0.1",
     "@prisma/client": "^5.14.0",
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
     "fastify": "^4.27.0",
     "fastify-plugin": "^4.5.1",
@@ -33,7 +33,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.2",
+    "@types/bcryptjs": "^2.4.6",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.12",
     "@types/supertest": "^6.0.2",

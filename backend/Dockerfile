@@ -1,15 +1,15 @@
-FROM node:20-alpine as build
+FROM node:20.0.0-alpine as build
 
 WORKDIR /usr/app
 
 # Copiar apenas os arquivos de configuração necessários
-COPY package.json ./
-RUN yarn install --production
+COPY package.json yarn.lock ./
+RUN yarn install
 COPY . .
 RUN npx prisma generate && yarn build
 
 # Etapa final
-FROM node:20-alpine as main
+FROM node:20.0.0-alpine as main
 
 WORKDIR /usr/app
 COPY --from=build /usr/app/package.json package.json

@@ -12,23 +12,28 @@ export default async function customerRoutes(fastify: FastifyInstance) {
 
   fastify.register(
     (customerAddressRoutes, opts, done) => {
-      customerAddressRoutes.get('/:customerId', async (request, reply) => {
-        const address = await findCustomerServiceFactory(fastify).execute(
-          //@ts-ignore
-          request.params['customerId'],
-        );
+      customerAddressRoutes.get<{ Params: { customerId: 'string' } }>(
+        '/:customerId',
+        {
+          schema: { params: { customerId: { type: 'string' } } },
+          handler: async (request, reply) => {
+            const { customerId } = request.params;
+            const address =
+              await findCustomerServiceFactory(fastify).execute(customerId);
 
-        reply.send(address).status(200);
-      });
+            reply.send(address).status(200);
+          },
+        },
+      );
 
-      customerAddressRoutes.delete('/:id', async (request, reply) => {
-        await deleteCustomerServiceFactory(fastify).execute(
-          //@ts-ignore
-          request.params['id'],
-        );
-
-        reply.send().status(200);
-      });
+      customerAddressRoutes.delete<{ Params: { id: string } }>(
+        '/:id',
+        async (request, reply) => {
+          const { id } = request.params;
+          await deleteCustomerServiceFactory(fastify).execute(id);
+          reply.send().status(200);
+        },
+      );
 
       customerAddressRoutes.put<{ Body: UpdateCustomerDto }>('/', {
         schema: { body: updateCustomerSchema },
