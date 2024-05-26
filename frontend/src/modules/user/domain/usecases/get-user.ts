@@ -1,5 +1,5 @@
 import { User } from "../models/user";
 
-export interface CreateUser{
-    execute():Promise<User>
+export interface GetUser{
+    execute(id:string):Promise<User>
 }

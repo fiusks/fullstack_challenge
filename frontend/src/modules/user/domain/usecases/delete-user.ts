@@ -1,3 +1,3 @@
 export interface DeleteUser{
-    execute():Promise<void>
+    execute(id:string):Promise<void>
 }
