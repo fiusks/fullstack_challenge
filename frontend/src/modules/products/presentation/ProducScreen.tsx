@@ -9,15 +9,15 @@ import { Product } from "./components";
 
 export default function Cart() {
 
-  const router = useRouter();
+  // const router = useRouter();
   
-  useLayoutEffect(() => {
-    getToken()
-    console.log("🚀 ~ useEffect ~ getToken():", getToken())
-    if (!isAuthenticated()) {
-      router.push('/login');
-    }
-  }, [router]);
+  // useLayoutEffect(() => {
+  //   getToken()
+  //   console.log("🚀 ~ useEffect ~ getToken():", getToken())
+  //   if (!isAuthenticated()) {
+  //     router.push('/login');
+  //   }
+  // }, [router]);
 
   return (
     <main className="flex flex-col items-center bg-neutral-50 h-full">
