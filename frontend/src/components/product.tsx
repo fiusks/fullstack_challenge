@@ -1,4 +1,4 @@
-
+import { convertCurrencyToLocaleBRL } from "@/utils/convertCurrencyToLocaleBRL";
 import Image from "next/image";
 
 export interface CategoryProps {
@@ -234,7 +234,7 @@ export function ProductsList() {
             <h3 className="text-sm font-medium mt-4">{product.name}</h3>
             <p className="text-xs">{product.description}</p>
             <p className="text-sm font-semibold mt-2">
-              {product.price}
+              {convertCurrencyToLocaleBRL(product.price)}
             </p>
 
             <button
