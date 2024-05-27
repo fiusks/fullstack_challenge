@@ -52,7 +52,7 @@ A versão utilizada do [Node.js](https://nodejs.org/en/) foi a v20.0.0 e a comun
 
 > Ver documentação [Prisma](https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases-typescript-postgres)
 
-O [schema](.backend/database/prisma/schema.prisma) segue o seguinte padrâo:
+O [schema](backend/database/prisma/schema.prisma) segue o seguinte padrâo:
 
 - Category
 - Customer
