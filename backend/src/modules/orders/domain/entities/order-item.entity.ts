@@ -1,11 +1,12 @@
 import { BaseEntity } from '~/modules/common/domain';
 import { Product } from '~/modules/product';
 import { OrderItemAmount } from '../value-objects';
+import { z } from 'zod';
 
 export class OrderItem extends BaseEntity {
   public static get validator() {
     return BaseEntity.baseValidator.extend({
-      product: Product.validator.transform((props) => new Product(props)),
+      product: z.instanceof(Product),
       amount: OrderItemAmount.validator.transform(
         (amount) => new OrderItemAmount(amount),
       ),
@@ -51,7 +52,7 @@ export class OrderItem extends BaseEntity {
 
 export namespace OrderItem {
   export type CreateProps = BaseEntity.CreateProps & {
-    product: Product.CreateProps;
+    product: Product;
     amount: number;
   };
 

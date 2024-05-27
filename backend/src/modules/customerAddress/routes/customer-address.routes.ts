@@ -19,6 +19,7 @@ export default async function customerAddressRoutes(fastify: FastifyInstance) {
   fastify.register(
     (customerAddressRoutes, opts, done) => {
       customerAddressRoutes.get<{ Params: { id: string } }>('/:customerId', {
+        onRequest: [fastify.authenticate],
         schema: { params: { findCustomerAddressSchema } },
         handler: async (request, reply) => {
           const { id } = request.params;
@@ -30,17 +31,20 @@ export default async function customerAddressRoutes(fastify: FastifyInstance) {
       });
 
       customerAddressRoutes.post<{ Body: CreateCustomerAddressDto }>('/', {
+        onRequest: [fastify.authenticate],
         schema: { body: createCustomerAddressSchema },
         handler: async (request, reply) => {
+          const customerId = (request.user as any).sub;
           const newAddress = await createCustomerAddressServiceFactory(
             fastify,
-          ).execute(request.body);
+          ).execute({ ...request.body, customerId });
 
           reply.send(newAddress).status(200);
         },
       });
 
       customerAddressRoutes.delete<{ Params: { id: string } }>('/:id', {
+        onRequest: [fastify.authenticate],
         schema: { params: deleteCustomerAddressSchema },
         handler: async (request, reply) => {
           const { id } = request.params;

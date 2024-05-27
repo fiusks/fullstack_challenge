@@ -13,7 +13,7 @@ export class CheckoutService {
   constructor(
     private readonly orderRepository: OrderRepository,
     private readonly productRepository: ProductRepository,
-    public readonly customerRepository: CustomerRepository,
+    private readonly customerRepository: CustomerRepository,
   ) {}
 
   public async execute(
@@ -55,8 +55,20 @@ export class CheckoutService {
       );
     }
 
-    // TODO create mapper
-    const orderItems = [] as OrderItem.CreateProps[];
+    const orderItems = input.items.map((item) => {
+      const product = products.find((product) =>
+        product.id.equals(EntityId.create(item.productId)),
+      )!;
+      return OrderItem.create({
+        product,
+        amount: item.amount,
+      });
+    });
+
+    orderItems.forEach((item) => {
+      item.product.decreaseStock(item.amount.value);
+    });
+
     const order = Order.create({
       customer,
       orderDate: new Date(),

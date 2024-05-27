@@ -7,7 +7,7 @@ import { OrderItem } from 'src/modules/orders/domain/entities/order-item.entity'
 export class PrismaOrderRepository implements OrderRepository {
   constructor(private readonly prismaService: PrismaClient) {}
 
-  convert(prismaOrder: PrismaOrderModel): Order {
+  private convert(prismaOrder: PrismaOrderModel): Order {
     const items = prismaOrder.productOrders.map((productOrder: any) => {
       return OrderItem.create({
         id: productOrder.id,
@@ -29,7 +29,7 @@ export class PrismaOrderRepository implements OrderRepository {
     });
   }
 
-  public async create(input: Order): Promise<Order> {
+  public async save(input: Order): Promise<Order> {
     const order = await this.prismaService.order.create({
       data: {
         id: input.id.id,
@@ -57,11 +57,9 @@ export class PrismaOrderRepository implements OrderRepository {
     });
     // order.productOrders[0].product.
 
-    //@ts-ignore
     return this.convert(order);
   }
 
-  // public async findByCustomerId(): Promise<Order[]> {
   public async findByCustomerId(customerId: string): Promise<Order[]> {
     const prismaOrders = await this.prismaService.order.findMany({
       where: { customerId },
@@ -74,7 +72,14 @@ export class PrismaOrderRepository implements OrderRepository {
     const prismaOrder = await this.prismaService.order.findUnique({
       where: { id },
     });
+
+    if (!prismaOrder) return null;
+
     // convert
     return null;
+  }
+
+  public async delete(id: string): Promise<void> {
+    await this.prismaService.order.delete({ where: { id } });
   }
 }

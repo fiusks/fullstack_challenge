@@ -1,7 +1,6 @@
 export const createCustomerAddressSchema = {
   type: 'object',
   required: [
-    'customerId',
     'zipCode',
     'street',
     'neighborhood',
@@ -14,7 +13,6 @@ export const createCustomerAddressSchema = {
     street: { type: 'string' },
     city: { type: 'string' },
     zipCode: { type: 'string' },
-    customerId: { type: 'string' },
     neighborhood: { type: 'string' },
     number: { type: 'string' },
     complement: { type: 'string' },

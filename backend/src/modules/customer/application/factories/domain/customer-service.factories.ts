@@ -2,7 +2,7 @@ import { FastifyInstance } from 'fastify';
 
 import {
   DeleteCustomerService,
-  FindCustomerByUsername,
+  FindCustomerById,
   UpdateCustomerService,
 } from '../../service';
 import { customerRepositoryFactory } from '../infra';
@@ -12,7 +12,7 @@ export const deleteCustomerServiceFactory = (fastify: FastifyInstance) => {
 };
 
 export const findCustomerServiceFactory = (fastify: FastifyInstance) => {
-  return new FindCustomerByUsername(customerRepositoryFactory(fastify));
+  return new FindCustomerById(customerRepositoryFactory(fastify));
 };
 
 export const updateCustomerServiceFactory = (fastify: FastifyInstance) => {

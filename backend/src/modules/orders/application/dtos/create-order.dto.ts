@@ -1,7 +1,7 @@
 export class CreateOrderItemDto {
   constructor(
     public readonly productId: string,
-    public readonly amount,
+    public readonly amount: number,
   ) {}
 }
 

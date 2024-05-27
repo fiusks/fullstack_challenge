@@ -5,6 +5,6 @@ export class FastifyJwtAccessTokenProvider implements AccessTokenProvider {
   constructor(private readonly fastify: FastifyInstance) {}
 
   public generateToken(user: UserDto): string {
-    return this.fastify.jwt.sign({ sub: user.email });
+    return this.fastify.jwt.sign({ sub: user.id }, { expiresIn: '7d' });
   }
 }

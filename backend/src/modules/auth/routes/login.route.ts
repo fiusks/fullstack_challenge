@@ -8,8 +8,6 @@ export async function loginRoute(fastify: FastifyInstance) {
       email: string;
       password: string;
     };
-    console.log('🚀 ~ fastify.post ~ email:', email);
-    console.log('🚀 ~ fastify.post ~ password:', password);
 
     const userRepository = userRepositoryFactory(fastify);
     const hash = new BcryptHash();

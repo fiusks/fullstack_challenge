@@ -49,9 +49,9 @@ export abstract class BaseEntity {
 
 export namespace BaseEntity {
   export type CreateProps = {
-    id: EntityId.CreateProps;
-    createdAt: Date;
-    updatedAt: Date;
+    id?: EntityId.CreateProps;
+    createdAt?: Date;
+    updatedAt?: Date;
   };
 
   export type Props = {

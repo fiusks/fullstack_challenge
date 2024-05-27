@@ -8,23 +8,21 @@ import {
 import { updateCustomerSchema } from './schemas';
 
 export default async function customerRoutes(fastify: FastifyInstance) {
-  const customerAddressBasePath = 'customer';
+  const customerBasePath = 'customers';
 
   fastify.register(
     (customerAddressRoutes, opts, done) => {
-      customerAddressRoutes.get<{ Params: { customerId: 'string' } }>(
-        '/:customerId',
-        {
-          schema: { params: { customerId: { type: 'string' } } },
-          handler: async (request, reply) => {
-            const { customerId } = request.params;
-            const address =
-              await findCustomerServiceFactory(fastify).execute(customerId);
+      customerAddressRoutes.get<{ Params: { customerId: 'string' } }>('/', {
+        onRequest: [fastify.authenticate],
+        schema: { params: { customerId: { type: 'string' } } },
+        handler: async (request, reply) => {
+          const customerId = (request.user as any).sub;
+          const customer =
+            await findCustomerServiceFactory(fastify).execute(customerId);
 
-            reply.send(address).status(200);
-          },
+          reply.send(customer).status(200);
         },
-      );
+      });
 
       customerAddressRoutes.delete<{ Params: { id: string } }>(
         '/:id',
@@ -48,6 +46,6 @@ export default async function customerRoutes(fastify: FastifyInstance) {
 
       done();
     },
-    { prefix: customerAddressBasePath },
+    { prefix: customerBasePath },
   );
 }

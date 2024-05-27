@@ -2,15 +2,13 @@ import z from 'zod';
 
 import { BaseEntity } from '~/modules/common/domain';
 import { OrderItem } from './order-item.entity';
+import { Customer } from '~/modules/customer';
 
 export class Order extends BaseEntity {
   public static get validator() {
     return BaseEntity.baseValidator.extend({
-      items: z
-        .array(OrderItem.validator)
-        .transform((items) =>
-          items.map((itemProps) => new OrderItem(itemProps)),
-        ),
+      customer: z.instanceof(Customer),
+      items: z.array(z.instanceof(OrderItem)).min(1),
       orderDate: z.date(),
     });
   }
@@ -48,13 +46,15 @@ export class Order extends BaseEntity {
 
 export namespace Order {
   export type CreateProps = BaseEntity.CreateProps & {
-    items: OrderItem.CreateProps[];
+    items: OrderItem[];
+    customer: Customer;
     orderDate: Date;
   };
 
   export type Props = BaseEntity.Props & {
     items: OrderItem[];
     orderDate: Date;
+    customer: Customer;
   };
 
   export type JSON = BaseEntity.JSON & {
