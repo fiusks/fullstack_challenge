@@ -1,11 +1,11 @@
 "use client";
 
 import { Header } from "@/components";
-import React, { ChangeEvent, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "./components/input";
-import AddressForm from "./components/address-form";
-import { AddButton } from "./components/button";
-import Link from "next/link";
+import AddressForm, { Address } from "./components/address-form";
+import { fetchHttpClientWithToken } from "@/modules/common";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 export interface AccountProps {
   id: string;
@@ -18,32 +18,30 @@ export interface AccountProps {
   birthday?: string;
   createdAt: string;
   updatedAt: string;
-}
-
-export interface AccountAddressProps {
-  id: string;
-  customerId: string;
-  zipCode: string;
-  street: string;
-  neighborhood: string;
-  city: string;
-  number: string;
-  complement: string | null;
-  state: string;
-  createdAt: string;
-  updatedAt: string;
+  address: Address | null;
 }
 
 export default function Account() {
-  const [phone, setPhone] = useState("");
+  const [customer, setCustomer] = useState<AccountProps>();
+  const [loading, setLoading] = useState(true);
 
-  const handlePhoneChange = (event: ChangeEvent<HTMLInputElement>) => {
-    let value = event.target.value;
-    value = value.replace(/\D/g, "");
-    value = value.replace(/^(\d{2})(\d)/g, "($1)$2");
-    value = value.replace(/(\d)(\d{4})$/, "$1-$2");
-    setPhone(value);
-  };
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+    },
+  });
+
+  useEffect(() => {
+    fetchHttpClientWithToken("customers")
+      .then((response) => response.json())
+      .then(setCustomer)
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) {
+    return <p>Loading profile...</p>;
+  }
 
   return (
     <main className="flex flex-col items-center bg-neutral-50 h-screen">
@@ -69,6 +67,7 @@ export default function Account() {
                   labelHtmlFor="name"
                   placeholder="John Due"
                   type="text"
+                  register={register}
                 />
               </div>
 
@@ -79,6 +78,7 @@ export default function Account() {
                   labelHtmlFor="email"
                   placeholder="johndue@mail.com"
                   type="email"
+                  register={register}
                 />
               </div>
             </div>
@@ -91,9 +91,8 @@ export default function Account() {
                   labelHtmlFor="phone"
                   placeholder="(99)99999-9999"
                   type="text"
-                  value={phone}
-                  onChange={handlePhoneChange}
                   maxLength={14}
+                  register={register}
                 />
               </div>
 
@@ -104,6 +103,7 @@ export default function Account() {
                   labelHtmlFor="birthday"
                   placeholder="01/01/1990"
                   type="date"
+                  register={register}
                 />
               </div>
             </div>
@@ -116,6 +116,7 @@ export default function Account() {
                   labelHtmlFor="Senha"
                   placeholder="********"
                   type="password"
+                  register={register}
                 />
               </div>
 
@@ -126,6 +127,7 @@ export default function Account() {
                   labelHtmlFor="password2"
                   placeholder="********"
                   type="password"
+                  register={register}
                 />
               </div>
             </div>
@@ -142,15 +144,7 @@ export default function Account() {
         </div>
       </div>
 
-      {true ? (
-        <AddressForm />
-      ) : (
-        <>
-         <p>Sem endreço cadastrado</p>
-        </>
-      )}
-      
-      
+      <AddressForm address={customer?.address || null} />
     </main>
   );
 }

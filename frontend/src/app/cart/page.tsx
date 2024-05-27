@@ -1,46 +1,52 @@
-'use client'
+"use client";
+
 import { Header } from "@/components";
 import { convertCurrencyToLocaleBRL } from "@/utils";
 import { Product } from "./components";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { cleanCart, selectCart } from "@/lib/features/cartSlice";
-import { ToastContainer, toast } from 'react-toastify';
-import { fetchHttpClient } from "@/modules/common";
+import { ToastContainer, toast } from "react-toastify";
+import { fetchHttpClientWithToken } from "@/modules/common";
 import { useRouter } from "next/navigation";
-import { useLayoutEffect, useMemo } from "react";
-import { selectAuthToken } from "@/lib/features/authSlice";
 
 export default function Cart() {
-  const router = useRouter()
-  const items = useAppSelector(selectCart);
-  
-  const dispatch = useAppDispatch()  
+  const router = useRouter();
+  const products = useAppSelector(selectCart);
 
-  const token = useAppSelector(selectAuthToken);
+  const dispatch = useAppDispatch();
 
-  
-  const total = items.reduce((acc, item) => acc + item.price, 0)
-  const delivery = 0.02*total
+  const total = products.reduce((acc, item) => acc + item.price, 0);
+  const deliveryTax = 0.02;
+  const delivery = deliveryTax * total;
 
   const handleCheckout = async () => {
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      // const response = await fetchHttpClient('/orders', {
-      //   method: 'POST',
-      // });
-      if (true) {
-        
-      
-        toast.success('Compra realizada com sucesso!');
-        setTimeout(() => {
-          router.push('/');
-        }, 2000)
-        dispatch(cleanCart())
-      } else {
-        toast.error('Ops! Algo deu errado, tente novamente.');
-      }
+      const items = products.reduce((items, products) => {
+        if (items.has(products.id)) {
+          items.set(products.id, items.get(products.id)! + 1);
+        }
+
+        items.set(products.id, 1);
+        return items;
+      }, new Map<string, number>());
+      await fetchHttpClientWithToken("/orders", {
+        method: "POST",
+        body: JSON.stringify({
+          items: Array.from(items, ([productId, amount]) => ({
+            productId,
+            amount,
+          })),
+        }),
+      });
+
+      toast.success("Order processed successfully!");
+      dispatch(cleanCart());
+      router.push("/");
     } catch (error) {
-      toast.error('Algo inesperado aconteceu');
+      toast.error(
+        (error as any).message ||
+          "An error occurred while processing your order"
+      );
     }
   };
 
@@ -52,8 +58,8 @@ export default function Cart() {
         <div className="flex flex-1 flex-col p-4 bg-white rounded-lg">
           <h1 className="text-xl font-semibold">Shopping Cart</h1>
           <div className="my-2 w-full border-b" />
-          {items.map((product) => (
-            <Product key={product.id} data={product} />
+          {products.map((product) => (
+            <Product key={product.id} product={product} />
           ))}
         </div>
 
@@ -63,7 +69,9 @@ export default function Cart() {
 
           <div className="flex flex-row justify-between mt-2">
             <p className="text-xs font-medium text-gray-400">Delivery</p>
-            <p className="text-xs font-semibold">{convertCurrencyToLocaleBRL(delivery)}</p>
+            <p className="text-xs font-semibold">
+              {convertCurrencyToLocaleBRL(delivery)}
+            </p>
           </div>
 
           <div className="flex flex-row justify-between mt-2">
@@ -73,7 +81,7 @@ export default function Cart() {
             </p>
           </div>
 
-          <button 
+          <button
             onClick={handleCheckout}
             className="mt-4 w-full p-2 text-xs bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-200 ease-in-out text-xs"
           >
@@ -81,7 +89,7 @@ export default function Cart() {
           </button>
         </div>
       </div>
-      <ToastContainer autoClose={1600}/>
+      <ToastContainer autoClose={1600} />
     </main>
   );
 }

@@ -1,33 +1,36 @@
-import { HttpClient } from '../domain';
+import { HttpClient } from "../domain";
 
-const baseURL = 'http://localhost:3333/';
+const baseURL = "http://localhost:3333/";
 
 export const fetchHttpClient: HttpClient = async (url, init) => {
   const _url = url instanceof URL ? url : new URL(url, baseURL);
   const headers = new Headers(init?.headers);
 
-  if(!headers.has('Content-Type')) {
-    headers.set('Content-Type', 'application/json');
+  if (!headers.has("Content-Type")) {
+    headers.set("Content-Type", "application/json");
   }
 
   const response = await fetch(_url, { ...init, headers });
 
   if (!response.ok) {
-    //@ts-ignore
-    throw new Error(response.status);
+    throw new Error(response.statusText);
   }
 
   return response;
 };
 
+let accessToken = "";
+
 export const fetchHttpClientWithToken: HttpClient = async (url, init) => {
-  // const token = localStorage.getItem('token');
-  const token = ""
   const headers = new Headers(init?.headers);
 
-  if (!headers.has('Authorization') && token) {
-    headers.set('Authorization', `Bearer ${token}`);
+  if (!headers.has("Authorization") && accessToken) {
+    headers.set("Authorization", `Bearer ${accessToken}`);
   }
 
   return fetchHttpClient(url, { ...init, headers });
+};
+
+export const setHttpClientToken = (token: string) => {
+  accessToken = token;
 };

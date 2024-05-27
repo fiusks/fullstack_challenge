@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { addToCart } from "@/lib/features/cartSlice";
 import { fetchProducts } from "@/lib/features/productSlice";
@@ -8,13 +8,12 @@ import { convertCurrencyToLocaleBRL } from "@/utils/convertCurrencyToLocaleBRL";
 import Image from "next/image";
 import { useEffect } from "react";
 
-
 export function ProductsList() {
   const dispatch = useAppDispatch();
-  const products = useAppSelector(state=>state.product.products)
-  useEffect(()=>{
-    dispatch(fetchProducts())
-  },[dispatch])
+  const products = useAppSelector((state) => state.product.products);
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
   const handleAddToCart = (product: Product) => {
     dispatch(addToCart(product));

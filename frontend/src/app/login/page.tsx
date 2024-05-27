@@ -1,17 +1,22 @@
-'use client'
+"use client";
 
-import { FormEvent, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import Logo from '@/assets/grupo-boticario.svg';
-import Image from 'next/image';
+import { FormEvent, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Logo from "@/assets/grupo-boticario.svg";
+import Image from "next/image";
 
-import { login, selectAuthError, selectAuthToken } from '@/lib/features/authSlice';
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import { ToastContainer } from 'react-toastify';
+import {
+  login,
+  selectAuthError,
+  selectAuthToken,
+} from "@/lib/features/authSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { ToastContainer } from "react-toastify";
+import Link from "next/link";
 
 export default function Login() {
   const router = useRouter();
- 
+
   const dispatch = useAppDispatch();
 
   const token = useAppSelector(selectAuthToken);
@@ -19,15 +24,15 @@ export default function Login() {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-      const formData = new FormData(event.currentTarget);
-      const formEmail = formData.get('email') as string;
-      const fomrPassword = formData.get('password') as string;
-    dispatch(login({ email:formEmail, password:fomrPassword }));
+    const formData = new FormData(event.currentTarget);
+    const formEmail = formData.get("email") as string;
+    const fomrPassword = formData.get("password") as string;
+    dispatch(login({ email: formEmail, password: fomrPassword }));
   };
 
   useEffect(() => {
     if (token) {
-      router.push('/cart');
+      router.push("/cart");
     }
   }, [token, router]);
 
@@ -37,7 +42,7 @@ export default function Login() {
         <Image
           src={Logo}
           alt="Logo Boticário"
-          style={{ height: 50, width: 'auto' }}
+          style={{ height: 50, width: "auto" }}
         />
 
         <div className="flex flex-col items-center pb-5 pt-5">
@@ -78,6 +83,13 @@ export default function Login() {
               placeholder="********"
             />
             {error && <p className="text-red-500 text-xs">{error}</p>}
+
+            <div className="flex flex-col items-end">
+              <Link href="/register" style={{ color: "#3b82f6", fontSize: 12 }}>
+                Criar Conta
+              </Link>
+            </div>
+
             <button
               type="submit"
               className="bg-blue-500 text-white rounded-md p-2 hover:bg-blue-600 transition duration-200 ease-in-out text-sm"
