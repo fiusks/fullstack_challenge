@@ -1,4 +1,4 @@
-
+'use client'
 import { removeFromCart } from "@/lib/features/cartSlice";
 import { useAppDispatch } from "@/lib/hooks";
 import { Product as ProducModel } from "@/modules/products/domain";
