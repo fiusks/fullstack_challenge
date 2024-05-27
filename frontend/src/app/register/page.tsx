@@ -1,36 +1,35 @@
 'use client';
 
-import { ChangeEvent, useState, FormEvent } from 'react';
+import { FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Logo from '@/assets/grupo-boticario.svg';
 import Image from 'next/image';
-import Link from 'next/link';
-import { getToken, setToken } from '@/utils';
+import { useAppDispatch } from '@/lib/hooks';
+import { setAuthToken } from '@/lib/features/authSlice';
+import { fetchHttpClient } from '@/modules/common';
 
 export default function CreateAccountPage() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-
-    const values = Object.fromEntries(formData.entries());
-    console.log('🚀 ~ values:', values);
-
+    
     try {
-      const response = await fetch('http://localhost:3333/login', {
+      const response = await fetchHttpClient('/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: formData,
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        console.log('🚀 ~ handleSubmit ~ response:', response);
+      
         const data = await response.json();
-
-        setToken(data.token);
+        
+        dispatch(setAuthToken(data))
 
         router.push('/dashboard');
       }
