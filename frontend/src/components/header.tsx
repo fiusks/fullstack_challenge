@@ -1,12 +1,23 @@
 import Logo from "@/assets/grupo-boticario.svg";
-import { getToken, isAuthenticated, removeToken } from "@/utils";
+import { logout, selectAuthToken } from "@/lib/features/authSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { BsHandbag } from "react-icons/bs";
 
 export function Header() {
+
+  const token = useAppSelector(selectAuthToken);
+  const dispatch = useAppDispatch();
+  const router =useRouter()
+  
+  const handleLogout = () => {
+    dispatch(logout());
+    router.push('/login')
+  };
+  
+
 
 
   return (
@@ -42,7 +53,8 @@ export function Header() {
           </Link>
         </div>
 
-        {isAuthenticated()?<Link
+        {token?<Link
+            onClick={handleLogout}
             href="/login"
             className="text-black hover:text-blue-500 duration-100"
             style={{
@@ -53,7 +65,7 @@ export function Header() {
               marginLeft: 22
             }}
           >
-            <button onSubmit={()=>removeToken}>Sair</button>
+            Sair
         </Link>:null}
         
         
