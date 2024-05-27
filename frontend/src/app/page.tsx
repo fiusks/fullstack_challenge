@@ -1,3 +1,5 @@
+'use client'
+
 import { Header, ProductsList, Search } from "@/components";
 // import { Product } from "../domain";
 
