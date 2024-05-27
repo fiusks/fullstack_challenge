@@ -1,3 +1,3 @@
 export interface HttpClient {
-  (input: RequestInfo, init?: RequestInit): Promise<Response>;
+  (url: string|URL, init?: RequestInit): Promise<Response>;
 }
