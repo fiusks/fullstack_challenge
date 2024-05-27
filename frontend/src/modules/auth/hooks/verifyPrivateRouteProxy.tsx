@@ -19,7 +19,14 @@ export function VerifyPrivateRouteProxy( props: React.PropsWithChildren<{}>) {
        'cart',
      ];
 
-    if (privateRoutes.includes(pathname) && !token) {
+     const isCartRoute = pathname==='cart'
+
+     if(!token && isCartRoute){
+      router.push('/');
+      return;
+     }
+
+    if (!token && privateRoutes.includes(pathname) ) {
        router.push('/login');
        return;
     }
