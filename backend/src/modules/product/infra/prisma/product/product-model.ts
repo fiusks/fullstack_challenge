@@ -2,6 +2,7 @@ import { PrismaCategoryModel } from '../category';
 
 export interface PrismaProductModel {
   id: string;
+  categoryId: string;
   name: string;
   description: string;
   enabled: boolean;

@@ -36,6 +36,15 @@ export class PrismaProductRepository implements ProductRepository {
     return products.map((product) => this.convert(product));
   }
 
+  async findByIds(ids: string[]): Promise<Product[]> {
+    const products = await this.prismaService.product.findMany({
+      where: { id: { in: [...ids] } },
+      include: { category: true },
+    });
+
+    return products.map((product) => this.convert(product));
+  }
+
   async findById(id: string): Promise<Product | null> {
     const dbProduct = await this.prismaService.product.findUnique({
       where: { id },
