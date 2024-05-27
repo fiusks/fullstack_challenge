@@ -107,32 +107,15 @@ $ npm run dev
 
 ---
 
----
-
 ## Rotas
 
 Devido ao tempo escasso, como citado acima, e apesar da experiência utilizando swagger, bem como o insomnia e o postman, não consegui implementar em tempo o swagger nem o JSON do insomnia, pois respeitei o prazo final de entrega. Porém, segue abaixo as rotas base para cada entidade, modificando os devidos verbos. Os testes podem ser feito do front end, e os dados iniciais estão sendo gerados via migration.
 
-> baseUrld = localhost:3333
-> /login
-> /register
-> /customers
-> /customer-address
-> /products
-> /categories
-> /orders
-
-```
-
-## Autor
-
-<a href="https://blog.rocketseat.com.br/author/thiago/">
- <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/68557347?v=4" width="100px;" alt=""/>
- <br />
- <sub><b>Rafael Barros</b></sub></a>
-
-[![Linkedin Badge](https://img.shields.io/badge/-Rafael-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/rafabarros1/)](https://www.linkedin.com/in/rafabarros1/)
-[![Gmail Badge](https://img.shields.io/badge/-rafabarros.com@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:rafabarros.com@gmail.com)](mailto:rafabarros.com@gmail.com)
-
----
-```
+> - baseUrl = localhost:3333
+> - /login
+> - /register
+> - /customers
+> - /customer-address
+> - /products
+> - /categories
+> - /orders
