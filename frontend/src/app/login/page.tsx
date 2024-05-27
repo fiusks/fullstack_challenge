@@ -1,41 +1,31 @@
 'use client'
 
-import { ChangeEvent, useState, FormEvent } from 'react';
+import { FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Logo from '@/assets/grupo-boticario.svg';
 import Image from 'next/image';
-import Link from 'next/link';
 
-import { getToken, setToken } from '@/utils';
+import { login, selectAuthError, selectAuthToken } from '@/lib/features/authSlice';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 
 export default function Login() {
   const router = useRouter();
+ 
+  const dispatch = useAppDispatch();
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  const token = useAppSelector(selectAuthToken);
+  const error = useAppSelector(selectAuthError);
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+      const formData = new FormData(event.currentTarget);
+      const formEmail = formData.get('email') as string;
+      const fomrPassword = formData.get('password') as string;
+    dispatch(login({ email:formEmail, password:fomrPassword }));
+  };
 
-    const values = Object.fromEntries(formData.entries());
-
-    try {
-      const response = await fetch('http://localhost:3333/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-
-        setToken(data.token);
-
-        router.push('/');
-      }
-    } catch (error) {
-      console.error('Error occurred during login:', error);
-    }
+  if (token) {
+    router.push('/cart');
   }
 
   return (
@@ -84,7 +74,7 @@ export default function Login() {
               className="border border-gray-100 rounded-md p-3 bg-gray-100 text-xs w-72"
               placeholder="********"
             />
-
+            {error && <p className="text-red-500 text-xs">{error}</p>}
             <button
               type="submit"
               className="bg-blue-500 text-white rounded-md p-2 hover:bg-blue-600 transition duration-200 ease-in-out text-sm"
