@@ -27,7 +27,7 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addToCart } = cartSlice.actions;
+export const { addToCart,removeFromCart } = cartSlice.actions;
 
 const selectSelf = (state: RootState) => state.cart;
 export const selectCartItems = createSelector(selectSelf, (state) => state.items);

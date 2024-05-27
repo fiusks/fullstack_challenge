@@ -47,10 +47,7 @@ const productsSlice = createSlice({
   },
 });
 
-const selectSelf = (state: RootState) => state.product;
-export const selectProducts = createSelector(
-  selectSelf,
-  (state) => state.products
-);
+
+export const selectProducts = (state: RootState) => state.product.products;
 
 export default productsSlice.reducer;
