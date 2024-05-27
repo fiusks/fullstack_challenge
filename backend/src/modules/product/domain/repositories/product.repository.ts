@@ -6,5 +6,6 @@ export interface ProductRepository {
   findByName(name: string): Promise<Product | null>;
   findManyByCategoryId(categoryId: string): Promise<Product[]>;
   findAll(): Promise<Product[]>;
+  findByIds(ids: string[]): Promise<Product[]>;
   update(product: Product): Promise<Product>;
 }
