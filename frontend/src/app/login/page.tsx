@@ -1,12 +1,13 @@
 'use client'
 
-import { FormEvent } from 'react';
+import { FormEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Logo from '@/assets/grupo-boticario.svg';
 import Image from 'next/image';
 
 import { login, selectAuthError, selectAuthToken } from '@/lib/features/authSlice';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { ToastContainer } from 'react-toastify';
 
 export default function Login() {
   const router = useRouter();
@@ -24,9 +25,11 @@ export default function Login() {
     dispatch(login({ email:formEmail, password:fomrPassword }));
   };
 
-  if (token) {
-    router.push('/cart');
-  }
+  useEffect(() => {
+    if (token) {
+      router.push('/cart');
+    }
+  }, [token, router]);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gradient-to-r from-purple-500 to-pink-500">
@@ -81,6 +84,7 @@ export default function Login() {
             >
               Login
             </button>
+            <ToastContainer />
           </div>
         </form>
       </div>
