@@ -19,7 +19,6 @@ interface LoginCredentials {
   email: string;
   password: string;
 }
-
 export const login = createAsyncThunk<string, LoginCredentials, { rejectValue: string }>(
   'auth/login',
   async (credentials, { rejectWithValue }) => {
@@ -49,10 +48,13 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    logout(state) {
+    logout:(state)=> {
       state.token = null;
       state.status = 'idle';
       state.error = null;
+    },
+    setAuthToken: (state, action: PayloadAction<string | null>) => {
+      state.token = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -72,7 +74,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout,setAuthToken } = authSlice.actions;
 
 export const selectAuthToken = (state: RootState) => state.auth.token;
 export const selectAuthError = (state: RootState) => state.auth.error;
