@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import StoreProvider from "./StoreProvider";
 import { VerifyPrivateRouteProxy } from "@/modules";
+import "react-toastify/dist/ReactToastify.css";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -23,9 +24,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={poppins.className}>
         <StoreProvider>
-          <VerifyPrivateRouteProxy>
+          {/* <VerifyPrivateRouteProxy> */}
             {children}
-          </VerifyPrivateRouteProxy>
+          {/* </VerifyPrivateRouteProxy> */}
         </StoreProvider>
       </body>
     </html>
