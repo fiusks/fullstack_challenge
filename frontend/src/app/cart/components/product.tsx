@@ -1,13 +1,24 @@
 
+import { removeFromCart } from "@/lib/features/cartSlice";
+import { useAppDispatch } from "@/lib/hooks";
+import { Product as ProducModel } from "@/modules/products/domain";
 import { convertCurrencyToLocaleBRL } from "@/utils";
 import Image from "next/image";
 import { FaRegTrashCan } from "react-icons/fa6";
 
 interface ProductComponentProps {
-  data: any;
+  data: ProducModel;
 }
 
 export function Product({ data }: ProductComponentProps) {
+
+  const dispatch = useAppDispatch();
+  
+
+  const handleRemoveFromCart = (product: ProducModel) => {
+    dispatch(removeFromCart(product.id));
+  };
+
   return (
     <div className="flex flex-row justify-between items-center mt-4 p-2 bg-white rounded-md border">
       <div className="flex flex-1">
@@ -23,7 +34,9 @@ export function Product({ data }: ProductComponentProps) {
       <p className="mx-24 text-xs font-medium">1</p>
       <p className="text-xs font-semibold">{convertCurrencyToLocaleBRL(data.price)}</p>
 
-      <button className="ml-4 text-gray-400 hover:text-red-500 duration-100">
+      <button 
+        onClick={()=>handleRemoveFromCart(data)}
+        className="ml-4 text-gray-400 hover:text-red-500 duration-100">
         <FaRegTrashCan size={12} />
       </button>
     </div>
