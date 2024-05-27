@@ -93,7 +93,7 @@ $ npm run dev
 - FrontEnd
 
 ```bash
-# Migrar para a pasta backend
+# Migrar para a pasta frontend
 
 # Instale as dependências
 $ npm install
