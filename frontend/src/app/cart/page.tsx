@@ -1,15 +1,48 @@
 'use client'
-
 import { Header } from "@/components";
 import { convertCurrencyToLocaleBRL } from "@/utils";
 import { Product } from "./components";
-import { useAppSelector } from "@/lib/hooks";
-import { selectCartItems } from "@/lib/features/cartSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { cleanCart, selectCart } from "@/lib/features/cartSlice";
+import { ToastContainer, toast } from 'react-toastify';
+import { fetchHttpClient } from "@/modules/common";
+import { useRouter } from "next/navigation";
+import { useLayoutEffect, useMemo } from "react";
+import { selectAuthToken } from "@/lib/features/authSlice";
 
 export default function Cart() {
-  const items = useAppSelector(selectCartItems);
+  const router = useRouter()
+  const items = useAppSelector(selectCart);
+  
+  const dispatch = useAppDispatch()  
+
+  const token = useAppSelector(selectAuthToken);
+
+  
   const total = items.reduce((acc, item) => acc + item.price, 0)
   const delivery = 0.02*total
+
+  const handleCheckout = async () => {
+    try {
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      // const response = await fetchHttpClient('/orders', {
+      //   method: 'POST',
+      // });
+      if (true) {
+        
+      
+        toast.success('Compra realizada com sucesso!');
+        setTimeout(() => {
+          router.push('/');
+        }, 2000)
+        dispatch(cleanCart())
+      } else {
+        toast.error('Ops! Algo deu errado, tente novamente.');
+      }
+    } catch (error) {
+      toast.error('Algo inesperado aconteceu');
+    }
+  };
 
   return (
     <main className="flex flex-col items-center bg-neutral-50 h-full">
@@ -40,11 +73,15 @@ export default function Cart() {
             </p>
           </div>
 
-          <button className="mt-4 w-full p-2 text-xs bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-200 ease-in-out text-xs">
+          <button 
+            onClick={handleCheckout}
+            className="mt-4 w-full p-2 text-xs bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-200 ease-in-out text-xs"
+          >
             Checkout
           </button>
         </div>
       </div>
+      <ToastContainer autoClose={1600}/>
     </main>
   );
 }
