@@ -14,7 +14,7 @@ import {
 } from './schemas';
 
 export default async function productRoutes(fastify: FastifyInstance) {
-  const customerAddressBasePath = 'product';
+  const customerAddressBasePath = 'products';
 
   fastify.register(
     (customerAddressRoutes, opts, done) => {
