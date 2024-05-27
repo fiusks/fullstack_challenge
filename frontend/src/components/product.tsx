@@ -1,7 +1,10 @@
-import { DashboardScreenProps } from "@/modules";
-import { Product } from "@/modules/products/domain";
+'use client'
+
+import { fetchProducts } from "@/lib/features/productSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { convertCurrencyToLocaleBRL } from "@/utils/convertCurrencyToLocaleBRL";
 import Image from "next/image";
+import { useEffect } from "react";
 
 export const data = [
   {
@@ -197,7 +200,11 @@ export const data = [
 ];
 
 export function ProductsList() {
-  const products = data;
+  const dispatch = useAppDispatch();
+  const products = useAppSelector(state=>state.product.products)
+  useEffect(()=>{
+    dispatch(fetchProducts())
+  },[dispatch])
 
   return (
     <section className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 items-center p-8">
