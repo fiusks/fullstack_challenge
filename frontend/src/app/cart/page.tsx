@@ -1,8 +1,16 @@
-import { Header, data } from "@/components";
+'use client'
+
+import { Header } from "@/components";
 import { convertCurrencyToLocaleBRL } from "@/utils";
 import { Product } from "./components";
+import { useAppSelector } from "@/lib/hooks";
+import { selectCartItems } from "@/lib/features/cartSlice";
 
 export default function Cart() {
+  const items = useAppSelector(selectCartItems);
+  const total = items.reduce((acc, item) => acc + item.price, 0)
+  const delivery = 0.02*total
+
   return (
     <main className="flex flex-col items-center bg-neutral-50 h-full">
       <Header />
@@ -11,7 +19,7 @@ export default function Cart() {
         <div className="flex flex-1 flex-col p-4 bg-white rounded-lg">
           <h1 className="text-xl font-semibold">Shopping Cart</h1>
           <div className="my-2 w-full border-b" />
-          {data.map((product) => (
+          {items.map((product) => (
             <Product key={product.id} data={product} />
           ))}
         </div>
@@ -21,19 +29,14 @@ export default function Cart() {
           <div className="my-2 w-full border-b" />
 
           <div className="flex flex-row justify-between mt-2">
-            <p className="text-xs font-medium text-gray-400">Discount</p>
-            <p className="text-xs font-semibold">{convertCurrencyToLocaleBRL(0.0)}</p>
-          </div>
-
-          <div className="flex flex-row justify-between mt-2">
             <p className="text-xs font-medium text-gray-400">Delivery</p>
-            <p className="text-xs font-semibold">{convertCurrencyToLocaleBRL(9.0)}</p>
+            <p className="text-xs font-semibold">{convertCurrencyToLocaleBRL(delivery)}</p>
           </div>
 
           <div className="flex flex-row justify-between mt-2">
             <p className="text-xs font-medium text-gray-400">Total</p>
             <p className="text-base font-semibold">
-              {convertCurrencyToLocaleBRL(799.99)}
+              {convertCurrencyToLocaleBRL(total)}
             </p>
           </div>
 
